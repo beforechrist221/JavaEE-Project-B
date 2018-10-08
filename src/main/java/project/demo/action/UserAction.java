@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 @WebServlet(urlPatterns = "/user")
 public class UserAction extends HttpServlet {
@@ -32,7 +34,22 @@ public class UserAction extends HttpServlet {
         String password = req.getParameter("password");
 
         Connection connection = DB.getConnection();
-        String sql = "";
+        String sql = "insert into db_b.user value(null, ?, ?, ?)";
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, username);
+            preparedStatement.setString(3, password);
+            preparedStatement.executeUpdate();
+
+            resp.sendRedirect("index.jsp");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DB.close(null, preparedStatement);
+        }
     }
 
     @Override
