@@ -16,7 +16,24 @@
 <nav id="nav" class="navbar navbar-inverse"></nav>
 <header class="jumbotron"></header>
 <main class="container">
-    Sign up
+    <section class="col-md-4 col-md-offset-4">
+        <form action="user" method="post">
+            <input type="hidden" name="action" value="signUp">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input id="email" name="email" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input id="username" name="username" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input id="password" type="password" name="password" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success btn-block">Sign up</button>
+        </form>
+    </section>
 </main>
 <footer class="jumbotron"></footer>
 <script src="assets/scripts/jquery-3.3.1.min.js"></script>
