@@ -113,6 +113,13 @@ public class UserAction extends HttpServlet {
 
     private void signUp(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email").trim();
+
+        if (queryUserByEmail(email) != null) {
+            req.setAttribute("message", "Email is existed.");
+            req.getRequestDispatcher("sign-up.jsp").forward(req, resp);
+            return;
+        }
+
         String username = req.getParameter("username").trim();
         String password = req.getParameter("password");
 

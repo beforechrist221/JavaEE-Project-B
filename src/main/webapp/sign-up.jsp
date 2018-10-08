@@ -22,6 +22,7 @@
             <div class="form-group">
                 <label for="email">Email</label>
                 <input id="email" name="email" class="form-control">
+                <span id="hint">${requestScope.message}</span>
             </div>
             <div class="form-group">
                 <label for="username">Username</label>
@@ -31,7 +32,7 @@
                 <label for="password">Password</label>
                 <input id="password" type="password" name="password" class="form-control">
             </div>
-            <button type="submit" class="btn btn-success btn-block">Sign up</button>
+            <button id="signUp" type="submit" class="btn btn-success btn-block">Sign up</button>
         </form>
     </section>
 </main>
@@ -49,7 +50,13 @@
                 data: {'action': 'checkEmail', 'email': email},
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data.isEmailExisted);
+                    if (data.isEmailExisted) {
+                        $('#hint').text("Email is existed.").css('color', '#900');
+                        $('#signUp').prop('disabled', true);
+                    } else {
+                        $('#hint').text("Email is not existed.").css('color', '#090');
+                        $('#signUp').prop('disabled', false);
+                    }
                 },
                 error: function (a, b, c) {
                     console.log((a + ', ' + b + ', ' + c));
