@@ -1,5 +1,6 @@
 package project.demo.action;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import project.demo.model.User;
 import project.demo.util.DB;
 
@@ -63,7 +64,8 @@ public class UserAction extends HttpServlet {
                 return new User(
                         resultSet.getInt("id"),
                         resultSet.getString("email"),
-                        resultSet.getString("username")
+                        resultSet.getString("username"),
+                        resultSet.getString("password")
                 );
             }
         } catch (SQLException e) {
@@ -79,36 +81,22 @@ public class UserAction extends HttpServlet {
 
     private void signIn(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String email = req.getParameter("email").trim();
-        String password = req.getParameter("password");
 
-        Connection connection = DB.getConnection();
-        String sql = "select * from db_b.user where email = ? and password = ?";
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-
-        try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, email);
-            preparedStatement.setString(2, password);
-            resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                User user = new User(
-                        resultSet.getInt("id"),
-                        resultSet.getString("email"),
-                        resultSet.getString("username")
-                );
+        User user = queryUserByEmail(email);
+        if (user != null) {
+            String password = req.getParameter("password");
+            String encryptedPassword = user.getPassword();
+            StrongPasswordEncryptor strongPasswordEncryptor = new StrongPasswordEncryptor();
+            if (strongPasswordEncryptor.checkPassword(password, encryptedPassword)) {
+                user.setPassword(null); // ***
                 req.getSession().setAttribute("user", user);
                 resp.sendRedirect("home.jsp");
-            } else {
-                req.setAttribute("message", "Invalid email or password.");
-                req.getRequestDispatcher("sign-in.jsp").forward(req, resp);
+                return;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DB.close(resultSet, preparedStatement);
         }
+
+        req.setAttribute("message", "Invalid Email or password.");
+        req.getRequestDispatcher("sign-in.jsp").forward(req, resp);
     }
 
     private void signUp(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -122,6 +110,9 @@ public class UserAction extends HttpServlet {
 
         String username = req.getParameter("username").trim();
         String password = req.getParameter("password");
+
+        StrongPasswordEncryptor strongPasswordEncryptor = new StrongPasswordEncryptor();
+        password = strongPasswordEncryptor.encryptPassword(password);
 
         Connection connection = DB.getConnection();
         String sql = "insert into db_b.user value(null, ?, ?, ?)";

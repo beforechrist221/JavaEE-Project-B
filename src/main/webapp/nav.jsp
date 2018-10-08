@@ -1,3 +1,5 @@
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -36,6 +38,7 @@
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
         <ul class="nav navbar-nav navbar-right">
+            <%-- todo --%>
             <li><a href="sign-up.jsp"><span class="glyphicon glyphicon-user"></span> Sign up</a></li>
             <li><a href="sign-in.jsp"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
             <li><a href="user?action=signOut"><span class="glyphicon glyphicon-log-out"></span> Sign out</a></li>

@@ -16,3 +16,5 @@ create table db_b.user (
 
 select *
 from db_b.user;
+
+truncate db_b.user;
