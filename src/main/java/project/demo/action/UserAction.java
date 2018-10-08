@@ -28,9 +28,53 @@ public class UserAction extends HttpServlet {
             case "signIn":
                 signIn(req, resp);
                 break;
+            case "signOut":
+                signOut(req, resp);
+                break;
+            case "checkEmail":
+                checkEmail(req, resp);
+                break;
             default:
                 break;
         }
+    }
+
+    private void checkEmail(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String email = req.getParameter("email").trim();
+        resp.setContentType("application/json, charset=UTF-8");
+        String json = "{\"isEmailExisted\": true}";
+        if (queryUserByEmail(email) == null) {
+            json = "{\"isEmailExisted\": false}";
+        }
+        resp.getWriter().write(json);
+    }
+
+    private User queryUserByEmail(String email) {
+        Connection connection = DB.getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String sql = "select * from db_b.user where email = ?";
+
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, email);
+            resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return new User(
+                        resultSet.getInt("id"),
+                        resultSet.getString("email"),
+                        resultSet.getString("username")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private void signOut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getSession().invalidate();
+        resp.sendRedirect("index.jsp");
     }
 
     private void signIn(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

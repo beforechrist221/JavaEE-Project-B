@@ -39,5 +39,24 @@
 <script src="assets/scripts/jquery-3.3.1.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.js"></script>
 <script src="assets/scripts/global.js"></script>
+<script>
+    $(function () {
+        $('#email').on('blur', function () {
+            var email = $(this).val();
+            $.ajax({
+                url: 'user',
+                type: 'post',
+                data: {'action': 'checkEmail', 'email': email},
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data.isEmailExisted);
+                },
+                error: function (a, b, c) {
+                    console.log((a + ', ' + b + ', ' + c));
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>
