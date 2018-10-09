@@ -1,19 +1,26 @@
 package project.demo.action;
 
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import project.demo.model.User;
 import project.demo.util.DB;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet(urlPatterns = "/user")
 public class UserAction extends HttpServlet {
@@ -65,7 +72,8 @@ public class UserAction extends HttpServlet {
                         resultSet.getInt("id"),
                         resultSet.getString("email"),
                         resultSet.getString("username"),
-                        resultSet.getString("password")
+                        resultSet.getString("password"),
+                        resultSet.getString("avatar")
                 );
             }
         } catch (SQLException e) {
@@ -114,8 +122,39 @@ public class UserAction extends HttpServlet {
         StrongPasswordEncryptor strongPasswordEncryptor = new StrongPasswordEncryptor();
         password = strongPasswordEncryptor.encryptPassword(password);
 
+        ///////////////////
+        // File Upload
+        DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
+        ServletContext servletContext = req.getServletContext();
+        String attribute = "javax.servlet.context.tempdir";
+        File repository = (File) servletContext.getAttribute(attribute);
+        diskFileItemFactory.setRepository(repository);
+
+        ServletFileUpload servletFileUpload = new ServletFileUpload(diskFileItemFactory);
+
+        try {
+            List<FileItem> fileItems = servletFileUpload.parseRequest(req);
+            for (FileItem fileItem : fileItems) {
+                if (fileItem.isFormField()) { // fileItem 是表单普通数据
+                    System.out.println(fileItem.getFieldName() + " : " + fileItem.getString()); // email : tom@tom.com
+                } else { // fileItem 是上传的文件
+                    System.out.println(fileItem.getFieldName());
+                    System.out.println(fileItem.getName());
+                    System.out.println(fileItem.getContentType());
+                    System.out.println(fileItem.isInMemory());
+                    System.out.println(fileItem.getSize());
+
+                    File file = new File("D:/" + fileItem.getFieldName()); // TODO: 10/9/2018
+                    fileItem.write(file);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        ///////////////////
+
         Connection connection = DB.getConnection();
-        String sql = "insert into db_b.user value(null, ?, ?, ?)";
+        String sql = "insert into db_b.user value(null, ?, ?, ?, null)"; // TODO: 10/9/2018
         PreparedStatement preparedStatement = null;
 
         try {

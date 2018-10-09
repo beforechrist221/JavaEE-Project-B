@@ -17,8 +17,8 @@
 <header class="jumbotron"></header>
 <main class="container">
     <section class="col-md-4 col-md-offset-4">
-        <form action="user" method="post">
-            <input type="hidden" name="action" value="signUp">
+        <form action="user?action=signUp" method="post" enctype="multipart/form-data">
+            <%--<input type="hidden" name="action" value="signUp">--%>
             <div class="form-group">
                 <label for="email">Email</label>
                 <input id="email" name="email" class="form-control">
@@ -31,6 +31,10 @@
             <div class="form-group">
                 <label for="password">Password</label>
                 <input id="password" type="password" name="password" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="upload">Avatar</label>
+                <input id="upload" type="file" name="upload" class="form-control">
             </div>
             <button id="signUp" type="submit" class="btn btn-success btn-block">Sign up</button>
         </form>

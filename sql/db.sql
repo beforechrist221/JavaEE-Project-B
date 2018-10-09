@@ -10,7 +10,8 @@ create table db_b.user (
   username varchar(255) not null
   comment 'username NN',
   password varchar(255) not null
-  comment 'password NN'
+  comment 'password NN',
+  avatar   varchar(255) comment 'avatar'
 )
   comment 'user table';
 
