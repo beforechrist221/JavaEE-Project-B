@@ -1,27 +1,19 @@
 package project.demo.action;
 
-import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.disk.DiskFileItemFactory;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import project.demo.model.User;
 import project.demo.util.DB;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 @WebServlet(urlPatterns = "/user")
 public class UserAction extends HttpServlet {
@@ -29,7 +21,7 @@ public class UserAction extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-        System.out.println(action);
+
         switch (action) {
             case "signUp":
                 signUp(req, resp);
@@ -108,53 +100,22 @@ public class UserAction extends HttpServlet {
     }
 
     private void signUp(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        String email = req.getParameter("email").trim();
+        String email = req.getParameter("email").trim();
 
-//        if (queryUserByEmail(email) != null) {
-//            req.setAttribute("message", "Email is existed.");
-//            req.getRequestDispatcher("sign-up.jsp").forward(req, resp);
-//            return;
-//        }
-//
-//        String username = req.getParameter("username").trim();
-//        String password = req.getParameter("password");
-
-//        System.out.println(username + password);
-
-        DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
-        ServletContext servletContext = req.getServletContext();
-        String attribute = "javax.servlet.context.tempdir";
-        File repository = (File) servletContext.getAttribute(attribute);
-        diskFileItemFactory.setRepository(repository);
-
-        ServletFileUpload servletFileUpload = new ServletFileUpload(diskFileItemFactory);
-        String fileName = null;
-        try {
-            List<FileItem> fileItems = servletFileUpload.parseRequest(req);
-            for (FileItem fileItem : fileItems) {
-                if (fileItem.isFormField()) {
-                    System.out.println(fileItem.getFieldName() + ":" + fileItem.getString());
-                } else {
-                    // FILE
-                    System.out.println(fileItem.getFieldName());
-                    System.out.println(fileItem.getName());
-                    System.out.println(fileItem.getContentType());
-                    System.out.println(fileItem.isInMemory());
-                    System.out.println(fileItem.getSize());
-                    File file = new File("d:/" + fileItem.getName());
-                    fileItem.write(file);
-                    fileName = fileItem.getName();
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (queryUserByEmail(email) != null) {
+            req.setAttribute("message", "Email is existed.");
+            req.getRequestDispatcher("sign-up.jsp").forward(req, resp);
+            return;
         }
 
-//        StrongPasswordEncryptor strongPasswordEncryptor = new StrongPasswordEncryptor();
-//        password = strongPasswordEncryptor.encryptPassword(password);
-/*
+        String username = req.getParameter("username").trim();
+        String password = req.getParameter("password");
+
+        StrongPasswordEncryptor strongPasswordEncryptor = new StrongPasswordEncryptor();
+        password = strongPasswordEncryptor.encryptPassword(password);
+
         Connection connection = DB.getConnection();
-        String sql = "insert into db_b.user value(null, ?, ?, ?, ?)";
+        String sql = "insert into db_b.user value(null, ?, ?, ?)";
         PreparedStatement preparedStatement = null;
 
         try {
@@ -162,7 +123,6 @@ public class UserAction extends HttpServlet {
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, username);
             preparedStatement.setString(3, password);
-            preparedStatement.setString(4, fileName);
             preparedStatement.executeUpdate();
 
             resp.sendRedirect("index.jsp");
@@ -170,7 +130,7 @@ public class UserAction extends HttpServlet {
             e.printStackTrace();
         } finally {
             DB.close(null, preparedStatement);
-        }*/
+        }
     }
 
     @Override
