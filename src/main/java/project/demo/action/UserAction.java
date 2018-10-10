@@ -146,8 +146,14 @@ public class UserAction extends HttpServlet {
                             break;
                     }
                 } else { // fileItem 是上传的文件
-                    avatar = fileItem.getName();
-                    File file = new File("D:/" + fileItem.getFieldName()); // TODO: 10/9/2018
+//                    fileItem.getContentType(); // Image/gif
+                    // TODO: 10/10/2018  contentType 进行判断
+
+                    String originName = fileItem.getName();
+                    String extension = originName.substring(originName.lastIndexOf(".")); // .gif .png .jpg
+                    String fileName = System.currentTimeMillis() + extension;
+                    avatar = fileName;
+                    File file = new File(servletContext.getRealPath("/avatar") + "/" + fileName);
                     fileItem.write(file);
                 }
             }
