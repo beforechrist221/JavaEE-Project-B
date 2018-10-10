@@ -28,7 +28,6 @@ public class UserAction extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
-
         switch (action) {
             case "signUp":
                 signUp(req, resp);
@@ -108,24 +107,15 @@ public class UserAction extends HttpServlet {
     }
 
     private void signUp(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String email = req.getParameter("email").trim();
-
-        if (queryUserByEmail(email) != null) {
-            req.setAttribute("message", "Email is existed.");
-            req.getRequestDispatcher("sign-up.jsp").forward(req, resp);
-            return;
-        }
-
-        String username = req.getParameter("username").trim();
-        String password = req.getParameter("password");
-
-        StrongPasswordEncryptor strongPasswordEncryptor = new StrongPasswordEncryptor();
-        password = strongPasswordEncryptor.encryptPassword(password);
+        String email = null;
+        String username = null;
+        String password = null;
+        String avatar = "default.png";
 
         ///////////////////
         // File Upload
         DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
-        ServletContext servletContext = req.getServletContext();
+        ServletContext servletContext = req.getServletContext(); // application
         String attribute = "javax.servlet.context.tempdir";
         File repository = (File) servletContext.getAttribute(attribute);
         diskFileItemFactory.setRepository(repository);
@@ -136,14 +126,27 @@ public class UserAction extends HttpServlet {
             List<FileItem> fileItems = servletFileUpload.parseRequest(req);
             for (FileItem fileItem : fileItems) {
                 if (fileItem.isFormField()) { // fileItem 是表单普通数据
-                    System.out.println(fileItem.getFieldName() + " : " + fileItem.getString()); // email : tom@tom.com
+                    switch (fileItem.getFieldName()) {
+                        case "email":
+                            email = fileItem.getString("UTF-8");
+                            if (queryUserByEmail(email) != null) {
+                                req.setAttribute("message", "Email is existed.");
+                                req.getRequestDispatcher("sign-up.jsp").forward(req, resp);
+                                return;
+                            }
+                            break;
+                        case "username":
+                            username = fileItem.getString("UTF-8");
+                            break;
+                        case "password":
+                            password = fileItem.getString("UTF-8");
+                            StrongPasswordEncryptor strongPasswordEncryptor = new StrongPasswordEncryptor();
+                            password = strongPasswordEncryptor.encryptPassword(password);
+                        default:
+                            break;
+                    }
                 } else { // fileItem 是上传的文件
-                    System.out.println(fileItem.getFieldName());
-                    System.out.println(fileItem.getName());
-                    System.out.println(fileItem.getContentType());
-                    System.out.println(fileItem.isInMemory());
-                    System.out.println(fileItem.getSize());
-
+                    avatar = fileItem.getName();
                     File file = new File("D:/" + fileItem.getFieldName()); // TODO: 10/9/2018
                     fileItem.write(file);
                 }
@@ -151,10 +154,9 @@ public class UserAction extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ///////////////////
 
         Connection connection = DB.getConnection();
-        String sql = "insert into db_b.user value(null, ?, ?, ?, null)"; // TODO: 10/9/2018
+        String sql = "insert into db_b.user value(null, ?, ?, ?, ?)";
         PreparedStatement preparedStatement = null;
 
         try {
@@ -162,6 +164,7 @@ public class UserAction extends HttpServlet {
             preparedStatement.setString(1, email);
             preparedStatement.setString(2, username);
             preparedStatement.setString(3, password);
+            preparedStatement.setString(4, avatar);
             preparedStatement.executeUpdate();
 
             resp.sendRedirect("index.jsp");

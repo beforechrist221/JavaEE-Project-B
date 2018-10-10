@@ -11,7 +11,7 @@ create table db_b.user (
   comment 'username NN',
   password varchar(255) not null
   comment 'password NN',
-  avatar   varchar(255) comment 'avatar'
+  avatar   varchar(255) default 'default.png' comment 'avatar'
 )
   comment 'user table';
 
