@@ -34,3 +34,18 @@
     - Finish
     
 8. Install Product    
+
+9. Database Configuration Assistant 窗口
+    - Password Management
+    - SCOTT
+    - 点击对号
+    - New Password
+    - Confirm Password
+    - HR，同上
+    - OK
+    - 警告 -> 忽略
+    - Yes
+    - OK
+    
+10. Finish
+    - Close    
