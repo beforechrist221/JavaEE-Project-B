@@ -39,9 +39,15 @@
         </form>
         <ul class="nav navbar-nav navbar-right">
             <%-- todo --%>
-            <li><a href="sign-up.jsp"><span class="glyphicon glyphicon-user"></span> Sign up</a></li>
-            <li><a href="sign-in.jsp"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
-            <li><a href="user?action=signOut"><span class="glyphicon glyphicon-log-out"></span> Sign out</a></li>
+            <c:if test="${sessionScope.user eq null}">
+                <li><a href="sign-up.jsp"><span class="glyphicon glyphicon-user"></span> Sign up</a></li>
+                <li><a href="sign-in.jsp"><span class="glyphicon glyphicon-log-in"></span> Sign in</a></li>
+            </c:if>
+            <c:if test="${sessionScope.user ne null}">
+                <li><a href="#"><img class="avatar img-circle" src="avatar/${sessionScope.user.avatar}"> ${sessionScope.user.username}</a></li>
+                <li><a href="user?action=signOut"><span class="glyphicon glyphicon-log-out"></span> Sign out</a></li>
+            </c:if>
         </ul>
     </div><!-- /.navbar-collapse -->
-</div><!-- /.container-fluid -->
+</div>
+<!-- /.container-fluid -->

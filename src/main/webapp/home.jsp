@@ -15,8 +15,8 @@
             height: 800px;
         }
 
-        #avatar {
-            height: 30px;
+        .avatar {
+            height: 20px;
         }
 
     </style>
@@ -27,7 +27,7 @@
 <header class="jumbotron"></header>
 <main class="container">
     <h1>Home page</h1>
-    <img class="img-rounded" id="avatar" src="avatar/${sessionScope.user.avatar}" alt="${sessionScope.user.username}">
+    <img class="avatar img-circle" src="avatar/${sessionScope.user.avatar}" alt="${sessionScope.user.username}">
     ${sessionScope.user.username}
 </main>
 <footer class="jumbotron"></footer>
