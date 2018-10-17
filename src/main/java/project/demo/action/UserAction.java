@@ -6,6 +6,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.ibatis.session.SqlSession;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import project.demo.model.User;
+import project.demo.model.UserInfo;
 import project.demo.util.MyBatisSession;
 
 import javax.servlet.ServletContext;
@@ -20,6 +21,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @WebServlet(urlPatterns = "/user")
@@ -101,6 +104,12 @@ public class UserAction extends HttpServlet {
         try (SqlSession sqlSession = MyBatisSession.getSqlSession(true)) {
             User user = new User(email, password);
             sqlSession.insert("user.signUp", user);
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String createTime = simpleDateFormat.format(new Date());
+
+            UserInfo userInfo = new UserInfo(createTime, user.getId());
+            sqlSession.insert("userInfo.create", userInfo);
         }
         resp.sendRedirect("index.jsp");
     }

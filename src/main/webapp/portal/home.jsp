@@ -18,6 +18,11 @@
         .avatar {
             height: 20px;
         }
+
+        #avatar {
+            height: 100px;
+        }
+
     </style>
 </head>
 <body>
@@ -25,8 +30,8 @@
 <header class="jumbotron"></header>
 <main class="container">
     <h1>Home page</h1>
-    <%--<img class="avatar img-circle" src="avatar/${sessionScope.user.avatar}" alt="${sessionScope.user.username}">--%>
-    ${sessionScope.user.email}
+    <img id="avatar" class="img-circle" src="/avatar/${sessionScope.user.userInfo.avatar}" alt="${sessionScope.user.userInfo.username}">
+    <h3>${sessionScope.user.email}</h3>
 </main>
 <footer class="jumbotron"></footer>
 <script src="../assets/scripts/jquery-3.3.1.min.js"></script>

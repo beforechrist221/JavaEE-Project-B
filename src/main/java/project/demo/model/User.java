@@ -7,6 +7,7 @@ public class User implements Serializable {
     private Integer id;
     private String email;
     private String password;
+    private UserInfo userInfo;
 
     public User() {
     }
@@ -46,12 +47,22 @@ public class User implements Serializable {
         this.password = password;
     }
 
+    public UserInfo getUserInfo() {
+
+        return userInfo;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "id=" + id +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", userInfo=" + userInfo +
                 '}';
     }
 }

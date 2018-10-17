@@ -15,13 +15,14 @@ create table db_b.user (
 drop table if exists db_b.user_info;
 create table db_b.user_info (
   id         int          auto_increment primary key
-  comment 'id PK',
+                comment 'id PK',
   username   varchar(255) comment 'username',
   avatar     varchar(255) default 'default.png'
-  comment 'avatar',
+                    comment 'avatar',
   mobile     varchar(255) comment 'mobile',
   createTime datetime comment 'sign up time',
   updateTime datetime comment 'last sign in time',
+  updateIp   varchar(255) comment 'last sign in IP address',
   userId     int comment 'user id FK'
 )
   comment 'user info table';

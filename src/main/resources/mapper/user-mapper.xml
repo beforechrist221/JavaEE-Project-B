@@ -7,9 +7,26 @@
         insert into db_b.user
         value (null, #{email}, #{password})
     </insert>
-    <select id="queryUserByEmail" parameterType="string" resultType="project.demo.model.User">
-        select *
-        from db_b.user
+
+    <resultMap id="queryUserByEmail_map" type="project.demo.model.User">
+        <id property="id" column="userId"/>
+        <result property="email" column="email"/>
+        <result property="password" column="password"/>
+        <association property="userInfo" javaType="project.demo.model.UserInfo">
+            <id property="id" column="id"/>
+            <result property="username" column="username"/>
+            <result property="avatar" column="avatar"/>
+            <result property="mobile" column="mobile"/>
+            <result property="createTime" column="createTime"/>
+            <result property="updateTime" column="updateTime"/>
+            <result property="updateIp" column="updateIp"/>
+            <result property="userId" column="userId"/>
+        </association>
+    </resultMap>
+    <select id="queryUserByEmail" parameterType="string" resultMap="queryUserByEmail_map">
+        select u.id as userId, u.email, u.password, ui.*
+        from db_b.user u
+                 inner join db_b.user_info ui on u.id = ui.userId
         where email = #{email}
     </select>
 </mapper>
