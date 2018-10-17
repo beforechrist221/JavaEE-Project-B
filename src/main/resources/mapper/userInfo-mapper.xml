@@ -3,8 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="userInfo">
-    <insert id="create" parameterType="project.demo.model.UserInfo" useGeneratedKeys="true" keyProperty="id">
+    <insert id="create" parameterType="userInfo" useGeneratedKeys="true" keyProperty="id">
         insert into db_b.user_info (createTime, userId)
         value (#{createTime}, #{userId})
     </insert>
+    <update id="signInUpdate" parameterType="userInfo">
+        update db_b.user_info
+        set updateTime = #{updateTime},
+            updateIp   = #{updateIp}
+        where id = #{id}
+    </update>
 </mapper>

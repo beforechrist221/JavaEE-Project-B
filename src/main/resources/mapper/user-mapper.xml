@@ -3,16 +3,16 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="user">
-    <insert id="signUp" parameterType="project.demo.model.User" useGeneratedKeys="true" keyProperty="id">
+    <insert id="signUp" parameterType="user" useGeneratedKeys="true" keyProperty="id">
         insert into db_b.user
         value (null, #{email}, #{password})
     </insert>
 
-    <resultMap id="queryUserByEmail_map" type="project.demo.model.User">
+    <resultMap id="queryUserByEmail_map" type="user">
         <id property="id" column="userId"/>
         <result property="email" column="email"/>
         <result property="password" column="password"/>
-        <association property="userInfo" javaType="project.demo.model.UserInfo">
+        <association property="userInfo" javaType="userInfo">
             <id property="id" column="id"/>
             <result property="username" column="username"/>
             <result property="avatar" column="avatar"/>

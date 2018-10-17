@@ -81,6 +81,16 @@ public class UserAction extends HttpServlet {
             if (strongPasswordEncryptor.checkPassword(password, encryptedPassword)) {
                 user.setPassword(null); // ***
                 req.getSession().setAttribute("user", user);
+
+                UserInfo userInfo = user.getUserInfo();
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String updateTime = simpleDateFormat.format(new Date());
+                userInfo.setUpdateTime(updateTime);
+                userInfo.setUpdateIp(req.getRemoteAddr());
+                try (SqlSession sqlSession = MyBatisSession.getSqlSession(true)) {
+                    sqlSession.update("userInfo.signInUpdate", userInfo);
+                }
+
                 resp.sendRedirect("/portal/home.jsp");
                 return;
             }

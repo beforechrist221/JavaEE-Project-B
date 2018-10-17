@@ -21,11 +21,11 @@
             <input type="hidden" name="action" value="signIn">
             <div class="form-group">
                 <label for="email">Email</label>
-                <input id="email" name="email" class="form-control">
+                <input id="email" name="email" class="form-control" value="tom@tom.com">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input id="password" type="password" name="password" class="form-control">
+                <input id="password" type="password" name="password" class="form-control" value="123">
             </div>
             <button type="submit" class="btn btn-primary btn-block">Sign in</button>
         </form>

@@ -15,6 +15,10 @@
             background: #ddd;
             height: 800px;
         }
+
+        .avatar {
+            height: 20px;
+        }
     </style>
 </head>
 <body>
