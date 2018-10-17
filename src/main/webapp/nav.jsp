@@ -45,8 +45,8 @@
             </c:if>
             <c:if test="${sessionScope.user ne null}">
                 <li><a class="pop" href="#" data-toggle="popover" data-container="body" data-trigger="hover" data-placement="bottom" title="Header..."
-                       data-content="<a href=&quot;user?action=signOut&quot;>Sign out</a>">
-                    <img class="avatar img-circle" src="avatar/${sessionScope.user.avatar}"> ${sessionScope.user.username}</a></li>
+                       data-content="<a href=&quot;/user?action=signOut&quot;>Sign out</a>">
+                    <%--<img class="avatar img-circle" src="avatar/${sessionScope.user.avatar}">--%> ${sessionScope.user.email}</a></li>
             </c:if>
         </ul>
     </div><!-- /.navbar-collapse -->

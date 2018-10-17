@@ -78,7 +78,7 @@ public class UserAction extends HttpServlet {
             if (strongPasswordEncryptor.checkPassword(password, encryptedPassword)) {
                 user.setPassword(null); // ***
                 req.getSession().setAttribute("user", user);
-                resp.sendRedirect("home.jsp");
+                resp.sendRedirect("/portal/home.jsp");
                 return;
             }
         }

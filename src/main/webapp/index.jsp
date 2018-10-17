@@ -18,8 +18,8 @@
     </style>
 </head>
 <body>
-<nav id="nav" class="navbar navbar-inverse"></nav>
-<header class="jumbotron"></header>
+<nav id="nav" class="index navbar navbar-inverse"></nav>
+<header class="index jumbotron"></header>
 <main class="container">
     <div class="row">
         <section class="col-md-4">
@@ -33,7 +33,7 @@
         </section>
     </div>
 </main>
-<footer class="jumbotron"></footer>
+<footer class="index jumbotron"></footer>
 <script src="assets/scripts/jquery-3.3.1.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.js"></script>
 <script src="assets/scripts/global.js"></script>
