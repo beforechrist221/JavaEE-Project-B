@@ -1,12 +1,12 @@
 package project.demo.action;
 
 import org.apache.commons.fileupload.FileItem;
-import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.ibatis.session.SqlSession;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import project.demo.model.User;
-import project.demo.util.DB;
+import project.demo.util.MyBatisSession;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -57,28 +57,9 @@ public class UserAction extends HttpServlet {
     }
 
     private User queryUserByEmail(String email) {
-        Connection connection = DB.getConnection();
-        PreparedStatement preparedStatement = null;
-        ResultSet resultSet = null;
-        String sql = "select * from db_b.user where email = ?";
-
-        try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, email);
-            resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return new User(
-                        resultSet.getInt("id"),
-                        resultSet.getString("email"),
-                        resultSet.getString("username"),
-                        resultSet.getString("password"),
-                        resultSet.getString("avatar")
-                );
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        try (SqlSession sqlSession = MyBatisSession.getSqlSession(false)) {
+            return sqlSession.selectOne("user.queryUserByEmail", email);
         }
-        return null;
     }
 
     private void signOut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -107,78 +88,21 @@ public class UserAction extends HttpServlet {
     }
 
     private void signUp(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String email = null;
-        String username = null;
-        String password = null;
-        String avatar = "default.png";
-
-        ///////////////////
-        // File Upload
-        DiskFileItemFactory diskFileItemFactory = new DiskFileItemFactory();
-        ServletContext servletContext = req.getServletContext(); // application
-        String attribute = "javax.servlet.context.tempdir";
-        File repository = (File) servletContext.getAttribute(attribute);
-        diskFileItemFactory.setRepository(repository);
-
-        ServletFileUpload servletFileUpload = new ServletFileUpload(diskFileItemFactory);
-
-        try {
-            List<FileItem> fileItems = servletFileUpload.parseRequest(req);
-            for (FileItem fileItem : fileItems) {
-                if (fileItem.isFormField()) { // fileItem 是表单普通数据
-                    switch (fileItem.getFieldName()) {
-                        case "email":
-                            email = fileItem.getString("UTF-8");
-                            if (queryUserByEmail(email) != null) {
-                                req.setAttribute("message", "Email is existed.");
-                                req.getRequestDispatcher("sign-up.jsp").forward(req, resp);
-                                return;
-                            }
-                            break;
-                        case "username":
-                            username = fileItem.getString("UTF-8");
-                            break;
-                        case "password":
-                            password = fileItem.getString("UTF-8");
-                            StrongPasswordEncryptor strongPasswordEncryptor = new StrongPasswordEncryptor();
-                            password = strongPasswordEncryptor.encryptPassword(password);
-                        default:
-                            break;
-                    }
-                } else { // fileItem 是上传的文件
-//                    fileItem.getContentType(); // Image/gif
-                    // TODO: 10/10/2018  contentType 进行判断
-
-                    String originName = fileItem.getName();
-                    String extension = originName.substring(originName.lastIndexOf(".")); // .gif .png .jpg
-                    String fileName = System.currentTimeMillis() + extension;
-                    avatar = fileName;
-                    File file = new File(servletContext.getRealPath("/avatar") + "/" + fileName);
-                    fileItem.write(file);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        String email = req.getParameter("email").trim();
+        if (queryUserByEmail(email) != null) {
+            req.setAttribute("message", "Email is existed.");
+            req.getRequestDispatcher("sign-up.jsp").forward(req, resp);
+            return;
         }
+        String password = req.getParameter("password");
+        StrongPasswordEncryptor strongPasswordEncryptor = new StrongPasswordEncryptor();
+        password = strongPasswordEncryptor.encryptPassword(password);
 
-        Connection connection = DB.getConnection();
-        String sql = "insert into db_b.user value(null, ?, ?, ?, ?)";
-        PreparedStatement preparedStatement = null;
-
-        try {
-            preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, email);
-            preparedStatement.setString(2, username);
-            preparedStatement.setString(3, password);
-            preparedStatement.setString(4, avatar);
-            preparedStatement.executeUpdate();
-
-            resp.sendRedirect("index.jsp");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            DB.close(null, preparedStatement);
+        try (SqlSession sqlSession = MyBatisSession.getSqlSession(true)) {
+            User user = new User(email, password);
+            sqlSession.insert("user.signUp", user);
         }
+        resp.sendRedirect("index.jsp");
     }
 
     @Override

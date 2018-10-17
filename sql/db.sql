@@ -7,13 +7,12 @@ create table db_b.user (
   comment 'id PK',
   email    varchar(255) not null unique
   comment 'email NN UN',
-  username varchar(255) not null
-  comment 'username NN',
-  password varchar(255) not null
-  comment 'password NN',
-  avatar   varchar(255) default 'default.png' comment 'avatar'
+  password varchar(64) not null
+  comment 'password NN'
 )
   comment 'user table';
+
+-- user_info table
 
 select *
 from db_b.user;

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+    <insert id="signUp" parameterType="project.demo.model.User" useGeneratedKeys="true" keyProperty="id">
+        insert into db_b.user
+        value (null, #{email}, #{password})
+    </insert>
+    <select id="queryUserByEmail" parameterType="string" resultType="project.demo.model.User">
+        select *
+        from db_b.user
+        where email = #{email}
+    </select>
+</mapper>
