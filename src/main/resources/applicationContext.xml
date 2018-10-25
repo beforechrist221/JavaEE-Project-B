@@ -18,4 +18,8 @@
         <property name="mapperLocations" value="classpath:mapper/*-mapper.xml"/>
         <property name="typeAliasesPackage" value="project.demo.model"/>
     </bean>
+
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+    </bean>
 </beans>
