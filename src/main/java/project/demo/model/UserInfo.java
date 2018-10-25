@@ -4,12 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserInfo implements Serializable {
+public class UserInfo extends BaseModel {
     private Integer id;
     private String username;
     private String avatar;
