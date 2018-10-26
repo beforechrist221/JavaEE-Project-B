@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="product">
+    <insert id="create" parameterType="product" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO db_b.product (
+            title, 
+            `desc`,
+            price, 
+            coverPicture, 
+            slidePictures, 
+            detailPictures, 
+            spec, 
+            stock, 
+            status, 
+            createTime, 
+            updateTime
+        )
+        VALUES (
+            #{title}, 
+            #{desc}, 
+            #{price}, 
+            #{coverPicture}, 
+            #{slidePictures}, 
+            #{detailPictures}, 
+            #{spec}, 
+            #{stock}, 
+            #{status}, 
+            #{createTime}, 
+            #{updateTime}
+        )
+    </insert>
+    <delete id="remove">
+        DELETE FROM db_b.product
+        WHERE product.id = #{id}
+    </delete>
+    <update id="modify">
+        UPDATE db_b.product
+        SET
+            title = #{title}, 
+            `desc` = #{desc},
+            price = #{price}, 
+            coverPicture = #{coverPicture}, 
+            slidePictures = #{slidePictures}, 
+            detailPictures = #{detailPictures}, 
+            spec = #{spec}, 
+            stock = #{stock}, 
+            status = #{status}, 
+            createTime = #{createTime}, 
+            updateTime = #{updateTime}
+        WHERE product.id = #{id}
+    </update>
+    <select id="queryAll" resultType="product">
+        SELECT *
+        FROM db_b.product
+        ORDER BY id
+    </select>
+    <select id="queryById" resultType="product">
+        SELECT *
+        FROM db_b.product
+        WHERE product.id = #{id}
+    </select>
+</mapper>
