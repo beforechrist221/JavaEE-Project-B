@@ -38,3 +38,5 @@ public Map method(){
 4. Checkout...
 
 5. Ctrl + K
+
+6. Ctrl + T
