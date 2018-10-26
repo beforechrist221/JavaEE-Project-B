@@ -1,6 +1,5 @@
 package project.demo.service.impl;
 
-import com.oracle.deploy.update.UpdateInfo;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,15 +45,6 @@ public class UserServiceImpl extends GenericServiceImpl<User, Integer> implement
 
     @Override
     public boolean signUp(User user) {
-        /*
-        1. checkEmail
-            1.1 return false
-        2. signUp
-            2.1 password encrypted
-            2.2 create user (id email password)
-            2.3 create userInfo (id createTime, userId)
-            2.4 return true
-         */
         if (queryUserByEmail(user.getEmail()) != null) {
             return false;
         }
@@ -72,17 +62,6 @@ public class UserServiceImpl extends GenericServiceImpl<User, Integer> implement
 
     @Override
     public User signIn(User user) {
-        /*
-        queryUserByEmail
-
-        user != null
-            password
-
-            userInfo(updateTime, updateIp)
-
-            return user
-        return null
-         */
         String plainPassword = user.getPassword();
         user = queryUserByEmail(user.getEmail());
         if (user != null) {
@@ -90,18 +69,14 @@ public class UserServiceImpl extends GenericServiceImpl<User, Integer> implement
             StrongPasswordEncryptor strongPasswordEncryptor = new StrongPasswordEncryptor();
             if (strongPasswordEncryptor.checkPassword(plainPassword, encryptedPassword)) {
                 UserInfo userInfo = user.getUserInfo();
-
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String updateTime = simpleDateFormat.format(new Date());
                 String updateIp = request.getRemoteAddr();
-
                 userInfo.setUpdateTime(updateTime);
                 userInfo.setUpdateIp(updateIp);
-
                 userInfoDao.modify("signInUpdate", userInfo);
 
                 user.setUserInfo(userInfo);
-
                 return user;
             }
         }

@@ -2,11 +2,9 @@ package project.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import project.demo.model.User;
-import project.demo.service.UserInfoService;
 import project.demo.service.UserService;
 
 import java.util.HashMap;
@@ -17,27 +15,12 @@ import java.util.Map;
 public class UserController extends BaseController {
 
     private UserService userService;
-    private UserInfoService userInfoService;
 
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
-    @Autowired
-    public void setUserInfoService(UserInfoService userInfoService) {
-        this.userInfoService = userInfoService;
-    }
-
-    /**
-     * Spring MVC JSON Jackson
-     * jackson-core
-     * jackson-databind
-     * javason-annotation
-     *
-     * @param email
-     * @return
-     */
     @RequestMapping("checkEmail")
     @ResponseBody
     public Map<String, Boolean> checkEmail(String email) {
