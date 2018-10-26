@@ -39,9 +39,9 @@
         $('#email').on('blur', function () {
             var email = $(this).val();
             $.ajax({
-                url: 'user',
+                url: ${ctx}'/user/checkEmail',
                 type: 'post',
-                data: {'action': 'checkEmail', 'email': email},
+                data: {'email': email},
                 dataType: 'json',
                 success: function (data) {
                     if (data.isEmailExisted) {

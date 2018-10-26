@@ -39,7 +39,8 @@ public class UserServiceImpl extends GenericServiceImpl<User, Integer> implement
         this.request = request;
     }
 
-    private User queryUserByEmail(String email) {
+    @Override
+    public User queryUserByEmail(String email) {
         return userDao.queryOne("queryUserByEmail", email);
     }
 

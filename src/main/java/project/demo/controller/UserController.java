@@ -4,9 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import project.demo.model.User;
 import project.demo.service.UserInfoService;
 import project.demo.service.UserService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("user")
@@ -25,9 +29,24 @@ public class UserController extends BaseController {
         this.userInfoService = userInfoService;
     }
 
+    /**
+     * Spring MVC JSON Jackson
+     * jackson-core
+     * jackson-databind
+     * javason-annotation
+     *
+     * @param email
+     * @return
+     */
     @RequestMapping("checkEmail")
-    public String checkEmail() { // TODO: 10/25/2018 parameter?
-        return null;
+    @ResponseBody
+    public Map<String, Boolean> checkEmail(String email) {
+        Map<String, Boolean> data = new HashMap<>();
+        data.put("isEmailExisted", false);
+        if (userService.queryUserByEmail(email) != null) {
+            data.put("isEmailExisted", true);
+        }
+        return data;
     }
 
     @RequestMapping("signUp")
