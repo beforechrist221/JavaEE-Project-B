@@ -32,7 +32,11 @@ public class UserController extends BaseController {
 
     @RequestMapping("signUp")
     public String signUp(User user) {
-        return null;
+        if (userService.signUp(user)) {
+            return "redirect:/index.jsp";
+        }
+        request.setAttribute("message", "Email existed.");
+        return "/sign-up.jsp";
     }
 
     @RequestMapping("signIn")
