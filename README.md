@@ -34,3 +34,7 @@ public Map method(){
 2. IDEA - File - Settings - git -> git.exe - Test
 
 3. IDEA - File - Settings - GitHub - add account
+
+4. Checkout...
+
+5. Ctrl + K
