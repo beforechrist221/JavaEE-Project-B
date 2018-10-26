@@ -26,3 +26,11 @@ public Map method(){
     return map; // {"key": value}
 }
 ```
+
+### GitHub
+1. install git (default)
+[https://git-scm.com/](https://git-scm.com/)
+
+2. IDEA - File - Settings - git -> git.exe - Test
+
+3. IDEA - File - Settings - GitHub - add account
