@@ -1,7 +1,6 @@
-<%@ page import="java.util.Date" %>
-<%@ page import="java.text.SimpleDateFormat" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="commons/inc.jsp" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -17,8 +16,7 @@
 <header class="index jumbotron"></header>
 <main class="container">
     <section class="col-md-4 col-md-offset-4">
-        <form action="user" method="post">
-            <input type="hidden" name="action" value="signIn">
+        <form action="${ctx}/user/signIn" method="post">
             <div class="form-group">
                 <label for="email">Email</label>
                 <input id="email" name="email" class="form-control" value="tom@tom.com">
