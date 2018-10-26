@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import project.demo.model.Product;
 import project.demo.service.ProductService;
 
+import java.text.SimpleDateFormat;
+
 @Controller
 @RequestMapping("product")
 public class ProductController extends BaseController {

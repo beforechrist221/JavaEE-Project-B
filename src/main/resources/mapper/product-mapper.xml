@@ -26,10 +26,10 @@
             #{slidePictures}, 
             #{detailPictures}, 
             #{spec}, 
-            #{stock}, 
+            #{stock},
             #{status}, 
-            #{createTime}, 
-            #{updateTime}
+            now(),
+            NULL
         )
     </insert>
     <delete id="remove">
@@ -47,9 +47,8 @@
             detailPictures = #{detailPictures}, 
             spec = #{spec}, 
             stock = #{stock}, 
-            status = #{status}, 
-            createTime = #{createTime}, 
-            updateTime = #{updateTime}
+            status = #{status},
+            updateTime = now()
         WHERE product.id = #{id}
     </update>
     <select id="queryAll" resultType="product">

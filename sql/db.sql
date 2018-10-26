@@ -93,5 +93,6 @@ from db_b.product;
 select *
 from db_b.category;
 
+select now();
 
 -- String title, String desc, double price, String coverPicture, String slidePictures, String detailPictures, String spec, int stock, int status, String createTime, String updateTime
