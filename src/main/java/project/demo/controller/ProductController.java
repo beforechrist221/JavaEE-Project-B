@@ -39,12 +39,12 @@ public class ProductController extends BaseController {
     @RequestMapping("queryAll")
     private String queryAll() {
         session.setAttribute("list", productService.queryAll());
-        return "redirect:/product/list.jsp";
+        return "redirect:/backend/product/list.jsp";
     }
 
     @RequestMapping("queryById/{id}")
     private String queryById(@PathVariable("id") Integer id) {
         session.setAttribute("product", productService.queryById(id));
-        return "redirect:/product/edit.jsp";
+        return "redirect:/backend/product/edit.jsp";
     }
 }

@@ -11,14 +11,14 @@
             TITLE: <input name="title" value="${sessionScope.product.title}"><br>
             DESC: <input name="desc" value="${sessionScope.product.desc}"><br>
             PRICE: <input name="price" value="${sessionScope.product.price}"><br>
-            COVERPICTURE: <input name="coverPicture" value="${sessionScope.product.coverPicture}"><br>
-            SLIDEPICTURES: <input name="slidePictures" value="${sessionScope.product.slidePictures}"><br>
-            DETAILPICTURES: <input name="detailPictures" value="${sessionScope.product.detailPictures}"><br>
+            COVER PICTURE: <input name="coverPicture" value="${sessionScope.product.coverPicture}"><br>
+            SLIDE PICTURES: <input name="slidePictures" value='${sessionScope.product.slidePictures}'><br>
+            DETAIL PICTURES: <input name="detailPictures" value='${sessionScope.product.detailPictures}'><br>
             SPEC: <input name="spec" value="${sessionScope.product.spec}"><br>
             STOCK: <input name="stock" value="${sessionScope.product.stock}"><br>
             STATUS: <input name="status" value="${sessionScope.product.status}"><br>
-            CREATETIME: <input name="createTime" value="${sessionScope.product.createTime}"><br>
-            UPDATETIME: <input name="updateTime" value="${sessionScope.product.updateTime}"><br>
+            CREATE TIME: <input name="createTime" value="${sessionScope.product.createTime}"><br>
+            UPDATE TIME: <input name="updateTime" value="${sessionScope.product.updateTime}"><br>
             <input type="submit" value="SAVE">
         </form>
     </body>
