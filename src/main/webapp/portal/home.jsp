@@ -34,7 +34,7 @@
     <h3>${sessionScope.user.email}</h3>
 </main>
 <footer class="jumbotron"></footer>
-<script src="../assets/scripts/jquery-3.3.1.min.js"></script>
+<script src="../assets/scripts/jquery.min.js"></script>
 <script src="../assets/bootstrap/js/bootstrap.js"></script>
 <script src="../assets/scripts/global.js"></script>
 </body>

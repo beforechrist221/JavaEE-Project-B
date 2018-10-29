@@ -15,10 +15,11 @@ public class UploadController extends BaseController {
     private static final String PHOTO_PATH = "/assets/photos";
 
     @RequestMapping("test")
-    public String test(@RequestParam MultipartFile photoFile) throws IOException {
+    public String test(@RequestParam MultipartFile[] photoFiles) throws IOException {
         String photoPath = application.getRealPath(PHOTO_PATH);
-        photoFile.transferTo(new File(photoPath, photoFile.getOriginalFilename()));
-        System.out.println(photoFile.getOriginalFilename());
+        for (MultipartFile photoFile : photoFiles) {
+            photoFile.transferTo(new File(photoPath, System.nanoTime() + ".png"));
+        }
         return "redirect:/upload-test.jsp";
     }
 }
