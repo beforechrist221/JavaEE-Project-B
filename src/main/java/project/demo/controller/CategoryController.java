@@ -39,17 +39,19 @@ public class CategoryController extends BaseController {
     @RequestMapping("queryAll")
     private String queryAll() {
         session.setAttribute("list", categoryService.queryAll());
-        return "redirect:/category/list.jsp";
+        return "redirect:/admin/category/list.jsp";
     }
 
     @RequestMapping("queryById/{id}")
     private String queryById(@PathVariable("id") Integer id) {
         session.setAttribute("category", categoryService.queryById(id));
-        return "redirect:/category/edit.jsp";
+        session.setAttribute("categories", categoryService.queryList("queryFistLevelCategory", null));
+        return "redirect:/admin/category/edit.jsp";
     }
 
     @RequestMapping("add")
     private String add() {
-        session.setAttribute("categories", categoryService.); // TODO: 10/29/2018 queryList
+        session.setAttribute("categories", categoryService.queryList("queryFistLevelCategory", null));
+        return "redirect:/admin/category/add.jsp";
     }
 }
