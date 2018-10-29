@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="category">
+    <insert id="create" parameterType="category" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO db_b.category (
+            title, 
+            desc, 
+            parentId, 
+            status, 
+            createTime, 
+            updateTime
+        )
+        VALUES (
+            #{title}, 
+            #{desc}, 
+            #{parentId}, 
+            #{status}, 
+            #{createTime}, 
+            #{updateTime}
+        )
+    </insert>
+    <delete id="remove">
+        DELETE FROM db_b.category
+        WHERE category.id = #{id}
+    </delete>
+    <update id="modify">
+        UPDATE db_b.category
+        SET
+            title = #{title}, 
+            desc = #{desc}, 
+            parentId = #{parentId}, 
+            status = #{status}, 
+            createTime = #{createTime}, 
+            updateTime = #{updateTime}
+        WHERE category.id = #{id}
+    </update>
+    <select id="queryAll" resultType="category">
+        SELECT *
+        FROM db_b.category
+        ORDER BY id
+    </select>
+    <select id="queryById" resultType="category">
+        SELECT *
+        FROM db_b.category
+        WHERE category.id = #{id}
+    </select>
+</mapper>

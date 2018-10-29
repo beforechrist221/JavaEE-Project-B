@@ -70,7 +70,7 @@ create table db_b.category (
   `desc`     varchar(255) not null
   comment 'describe NN',
   parentId   int comment 'parent category id NULL-',
-  stutus     int default 0
+  status     int default 0
   comment 'status 0-; 1-',
   createTime datetime     not null
   comment 'create time NN',
