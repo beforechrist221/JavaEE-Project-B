@@ -13,7 +13,7 @@
 </head>
 <body>
 <h1>upload</h1>
-<form action="${ctx}/upload/photo" method="post" enctype="multipart/form-data">
+<form action="${ctx}/upload/test" method="post" enctype="multipart/form-data">
     <input type="file" name="photoFile">
     <input type="submit" value="Upload">
 </form>
