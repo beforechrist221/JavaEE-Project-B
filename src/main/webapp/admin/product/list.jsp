@@ -18,9 +18,9 @@
                 <th>TITLE</th>
                 <th>DESC</th>
                 <th>PRICE</th>
-                <th>COVERPICTURE</th>
-                <th>SLIDEPICTURES</th>
-                <th>DETAILPICTURES</th>
+                <th>COVER PICTURE</th>
+                <th>SLIDE PICTURES</th>
+                <th>DETAIL PICTURES</th>
                 <th>SPEC</th>
                 <th>STOCK</th>
                 <th>STATUS</th>
@@ -34,7 +34,7 @@
                 <td>${product.title}</td>
                 <td>${product.desc}</td>
                 <td>${product.price}</td>
-                <td>${product.coverPicture}</td>
+                <td><img src="pictures/cover/${product.coverPicture}"></td>
                 <td>${product.slidePictures}</td>
                 <td>${product.detailPictures}</td>
                 <td>${product.spec}</td>

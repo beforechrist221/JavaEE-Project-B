@@ -5,16 +5,36 @@
 <head>
     <meta charset="UTF-8"/>
     <title>product add page</title>
+    <style>
+        span {
+            color: #fff;
+            background: #900;
+            display: inline-block;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <h1>ADD Product</h1>
-<form action="${ctx}/product/create" method="post">
+<form action="${ctx}/product/create" method="post" enctype="multipart/form-data">
     <input name="title" placeholder="TITLE"><br>
     <input name="desc" placeholder="DESC" value="desc..."><br>
     <input name="price" placeholder="PRICE" value="123.45"><br>
-    <input name="coverPicture" placeholder="COVER PICTURE" value="cover.jpg"><br>
-    <input name="slidePictures" placeholder="SLIDE PICTURES" value='["1.jpg", "2.jpg"]'><br>
-    <input name="detailPictures" placeholder="DETAIL PICTURES" value='["3.jpg", "4.jpg"]'><br>
+    <%----%>
+    封面图片 <input type="file" name="coverPictureFile"><br>
+    <hr>
+    滑动图片组 <br>
+    <input type="file" name="slidePictureFiles"><br>
+    <input type="file" name="slidePictureFiles"><br>
+    <input type="file" name="slidePictureFiles"><br>
+    <input type="file" name="slidePictureFiles"><br>
+    <input type="file" name="slidePictureFiles"><br>
+    <hr>
+    详情图片组 <br>
+    <input type="file" name="detailPictureFiles"><br>
+    <span>Add file</span>
+    <br>
+    <%----%>
     <input name="spec" placeholder="SPEC" value="spec..."><br>
     <input name="stock" placeholder="STOCK" value="10000"><br>
     STATUS
@@ -25,5 +45,13 @@
     <br>
     <input type="submit" value="ADD">
 </form>
+<script src="../../assets/scripts/jquery.min.js"></script>
+<script>
+    $(function () {
+        $('span').on('click', function () {
+            $('<input type="file" name="slidePictureFiles"><br>').insertBefore($(this));
+        })
+    });
+</script>
 </body>
 </html>
