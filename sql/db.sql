@@ -38,6 +38,7 @@ create table db_b.product (
   comment '名称 NN',
   `desc`         text comment '描述',
   price          decimal(10, 2) not null
+#     , originalPrice decimal(10,2) comment 'original price',
   comment '价格 NN',
   coverPicture   varchar(255)   not null
   comment '封面图片 NN',
@@ -54,6 +55,8 @@ create table db_b.product (
   createTime     datetime       not null
   comment '创建时间 NN',
   updateTime     datetime comment '更新时间'
+
+  -- , categoryId int comment 'category id FK'
 )
   comment 'product table';
 
