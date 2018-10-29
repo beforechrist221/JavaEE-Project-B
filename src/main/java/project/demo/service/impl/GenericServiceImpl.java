@@ -23,6 +23,11 @@ public abstract class GenericServiceImpl<T extends Serializable, ID extends Numb
     }
 
     @Override
+    public List<T> queryList(String sqlId, Object parameter) {
+        return genericDao.queryAll();
+    }
+
+    @Override
     public T queryById(ID id) {
         return genericDao.queryById(id);
     }

@@ -9,6 +9,8 @@ public interface GenericService<T extends Serializable, ID extends Number> {
 
     List<T> queryAll();
 
+    List<T> queryList(String sqlId, Object parameter);
+
     T queryById(ID id);
 
     void modify(T t);

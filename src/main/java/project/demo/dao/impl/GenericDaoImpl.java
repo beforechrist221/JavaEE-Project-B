@@ -41,6 +41,11 @@ public abstract class GenericDaoImpl<T extends Serializable, ID extends Number> 
     }
 
     @Override
+    public List<T> queryList(String sqlId, Object parameter) {
+        return sqlSession.selectList(getStatement(sqlId), parameter);
+    }
+
+    @Override
     public T queryById(ID id) {
         return sqlSession.selectOne(getStatement("queryById"), id);
     }
