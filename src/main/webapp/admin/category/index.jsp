@@ -6,7 +6,7 @@
     </head>
     <body>
         <h1>Category INDEX</h1>
-        <p><a href="${ctx}/category/add.jsp">ADD</a></p>
+        <p><a href="${ctx}/category/add">ADD</a></p>
         <p><a href="${ctx}/category/queryAll">LIST</a></p>
     </body>
 </html>

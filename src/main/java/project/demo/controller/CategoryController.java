@@ -47,4 +47,9 @@ public class CategoryController extends BaseController {
         session.setAttribute("category", categoryService.queryById(id));
         return "redirect:/category/edit.jsp";
     }
+
+    @RequestMapping("add")
+    private String add() {
+        session.setAttribute("categories", categoryService.); // TODO: 10/29/2018 queryList
+    }
 }

@@ -38,7 +38,7 @@ create table db_b.product (
   comment '名称 NN',
   `desc`         text comment '描述',
   price          decimal(10, 2) not null
-#     , originalPrice decimal(10,2) comment 'original price',
+    #     , originalPrice decimal(10,2) comment 'original price',
   comment '价格 NN',
   coverPicture   varchar(255)   not null
   comment '封面图片 NN',
@@ -67,7 +67,7 @@ create table db_b.category (
   comment 'id PK',
   title      varchar(255) not null
   comment 'title NN',
-  `desc`     varchar(255) not null
+  `desc`     varchar(255)
   comment 'describe NN',
   parentId   int comment 'parent category id NULL-',
   status     int default 0
@@ -83,6 +83,25 @@ alter table db_b.user_info
   user_info_fk_userId
 foreign key (userId)
 references db_b.user (id);
+
+insert into db_b.category (title, createTime)
+value ('居家', now());
+insert into db_b.category (title, createTime)
+value ('鞋包', now());
+insert into db_b.category (title, createTime)
+value ('服装', now());
+insert into db_b.category (title, createTime)
+value ('电器', now());
+insert into db_b.category (title, createTime)
+value ('洗护', now());
+insert into db_b.category (title, createTime)
+value ('饮食', now());
+insert into db_b.category (title, createTime)
+value ('餐厨', now());
+insert into db_b.category (title, createTime)
+value ('婴童', now());
+insert into db_b.category (title, createTime)
+value ('文体', now());
 
 select *
 from db_b.user;

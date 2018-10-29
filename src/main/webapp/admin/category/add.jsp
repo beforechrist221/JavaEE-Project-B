@@ -8,11 +8,13 @@
         <h1>ADD Category</h1>
         <form action="${ctx}/category/create" method="post">
             <input name="title" placeholder="TITLE"><br>
-            <input name="desc" placeholder="DESC"><br>
+            <input name="desc" placeholder="DESC" value="desc..."><br>
             <input name="parentId" placeholder="PARENTID"><br>
-            <input name="status" placeholder="STATUS"><br>
-            <input name="createTime" placeholder="CREATETIME"><br>
-            <input name="updateTime" placeholder="UPDATETIME"><br>
+            <select name="status">
+                <option value="0">启用</option>
+                <option value="1">关闭</option>
+            </select>
+            <br>
             <input type="submit" value="ADD">
         </form>
     </body>
