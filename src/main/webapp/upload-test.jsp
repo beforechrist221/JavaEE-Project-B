@@ -13,8 +13,18 @@
 </head>
 <body>
 <h1>upload</h1>
+<pre>
+    1. 多个文件上传 slidePictures
+    2. 任意个文件上传 detailPictures
+</pre>
 <form action="${ctx}/upload/test" method="post" enctype="multipart/form-data">
-    <input type="file" name="photoFile">
+    <p><input type="file" name="photoFile"></p>
+    <p><input type="file" name="photoFile"></p>
+    <p><input type="file" name="photoFile"></p>
+    <p><input type="file" name="photoFile"></p>
+    <p><input type="file" name="photoFile"></p>
+    <button>+</button>
+    <br>
     <input type="submit" value="Upload">
 </form>
 </body>
