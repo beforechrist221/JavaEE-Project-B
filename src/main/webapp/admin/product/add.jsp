@@ -45,7 +45,12 @@
     </select>
     <br>
     CATEGORY
-    <%-- todo --%>
+    <select name="categoryId">
+        <c:forEach var="category" items="${sessionScope.categories}">
+            <option value="${category.id}">${category.title}</option>
+        </c:forEach>
+    </select>
+    <br>
     <input type="submit" value="ADD">
 </form>
 <script src="../../assets/scripts/jquery.min.js"></script>

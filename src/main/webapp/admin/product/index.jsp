@@ -6,7 +6,7 @@
     </head>
     <body>
         <h1>Product INDEX</h1>
-        <p><a href="${ctx}/admin/product/add.jsp">ADD</a></p>
+        <p><a href="${ctx}/product/add">ADD</a></p>
         <p><a href="${ctx}/product/queryAll">LIST</a></p>
     </body>
 </html>

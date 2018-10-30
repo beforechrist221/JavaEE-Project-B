@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.multipart.MultipartFile;
 import project.demo.model.Product;
+import project.demo.service.CategoryService;
 import project.demo.service.ProductService;
 
 import java.io.File;
@@ -19,11 +20,17 @@ public class ProductController extends BaseController {
 
     private static final String COVER_FILE_PATH = "/admin/product/pictures/cover/";
 
-    private final ProductService productService;
+    private ProductService productService;
+    private CategoryService categoryService;
 
     @Autowired
-    public ProductController(ProductService productService) {
+    public void setProductService(ProductService productService) {
         this.productService = productService;
+    }
+
+    @Autowired
+    public void setCategoryService(CategoryService categoryService) {
+        this.categoryService = categoryService;
     }
 
     @RequestMapping("create")
@@ -40,7 +47,7 @@ public class ProductController extends BaseController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         product.setCoverPicture(coverFileName);
         product.setSlidePictures(""); // TODO: 10/29/2018  
         product.setDetailPictures(""); // TODO: 10/29/2018  
@@ -70,5 +77,11 @@ public class ProductController extends BaseController {
     private String queryById(@PathVariable("id") Integer id) {
         session.setAttribute("product", productService.queryById(id));
         return "redirect:/admin/product/edit.jsp";
+    }
+
+    @RequestMapping("add")
+    private String add() {
+        session.setAttribute("categories", categoryService.queryAll());
+        return "redirect:/admin/product/add.jsp";
     }
 }

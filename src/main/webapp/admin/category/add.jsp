@@ -24,12 +24,5 @@
     <br>
     <input type="submit" value="ADD">
 </form>
-<script src="../../assets/scripts/jquery.min.js"></script>
-<script>
-    $(function () {
-
-
-    });
-</script>
 </body>
 </html>
