@@ -13,6 +13,7 @@ public class Product extends BaseModel {
     private String title;
     private String desc;
     private double price;
+    private double originalPrice;
     private String coverPicture;
     private String slidePictures;
     private String detailPictures;
@@ -21,4 +22,5 @@ public class Product extends BaseModel {
     private int status;
     private String createTime;
     private String updateTime;
+    private Integer categoryId;
 }

@@ -5,50 +5,52 @@
 
 <mapper namespace="product">
     <insert id="create" parameterType="product" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO db_b.product (
-            title, 
-            `desc`,
-            price, 
-            coverPicture, 
-            slidePictures, 
-            detailPictures, 
-            spec, 
-            stock, 
-            status, 
-            createTime, 
-            updateTime
-        )
-        VALUES (
-            #{title}, 
-            #{desc}, 
-            #{price}, 
-            #{coverPicture}, 
-            #{slidePictures}, 
-            #{detailPictures}, 
-            #{spec}, 
-            #{stock},
-            #{status}, 
-            now(),
-            NULL
-        )
+        INSERT INTO db_b.product (title,
+                                  `desc`,
+                                  price,
+                                  originalPrice,
+                                  coverPicture,
+                                  slidePictures,
+                                  detailPictures,
+                                  spec,
+                                  stock,
+                                  status,
+                                  createTime,
+                                  updateTime,
+                                  categoryId)
+        VALUES (#{title},
+                #{desc},
+                #{price},
+                #{originalPrice},
+                #{coverPicture},
+                #{slidePictures},
+                #{detailPictures},
+                #{spec},
+                #{stock},
+                #{status},
+                now(),
+                NULL,
+                #{categoryId})
     </insert>
     <delete id="remove">
-        DELETE FROM db_b.product
+        DELETE
+        FROM db_b.product
         WHERE product.id = #{id}
     </delete>
     <update id="modify">
         UPDATE db_b.product
-        SET
-            title = #{title}, 
-            `desc` = #{desc},
-            price = #{price}, 
-            coverPicture = #{coverPicture}, 
-            slidePictures = #{slidePictures}, 
-            detailPictures = #{detailPictures}, 
-            spec = #{spec}, 
-            stock = #{stock}, 
-            status = #{status},
-            updateTime = now()
+        SET title          = #{title},
+            `desc`         = #{desc},
+            price          = #{price},
+            originalPrice  = #{originalPrice},
+            coverPicture   = #{coverPicture},
+            slidePictures  = #{slidePictures},
+            detailPictures = #{detailPictures},
+            spec           = #{spec},
+            stock          = #{stock},
+            status         = #{status},
+            updateTime     = now(),
+            categoryId     = #{categoryId}
         WHERE product.id = #{id}
     </update>
     <select id="queryAll" resultType="product">

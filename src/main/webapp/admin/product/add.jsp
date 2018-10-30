@@ -20,6 +20,7 @@
     <input name="title" placeholder="TITLE"><br>
     <input name="desc" placeholder="DESC" value="desc..."><br>
     <input name="price" placeholder="PRICE" value="123.45"><br>
+    <input name="originalPrice" placeholder="ORIGINAL PRICE" value="321.45"><br>
     <%----%>
     封面图片 <input type="file" name="coverPictureFile"><br>
     <hr>
@@ -43,6 +44,8 @@
         <option value="1">暂存</option>
     </select>
     <br>
+    CATEGORY
+    <%-- todo --%>
     <input type="submit" value="ADD">
 </form>
 <script src="../../assets/scripts/jquery.min.js"></script>

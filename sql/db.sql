@@ -38,8 +38,8 @@ create table db_b.product (
   comment '名称 NN',
   `desc`         text comment '描述',
   price          decimal(10, 2) not null
-    #     , originalPrice decimal(10,2) comment 'original price',
   comment '价格 NN',
+  originalPrice  decimal(10, 2) comment '原价',
   coverPicture   varchar(255)   not null
   comment '封面图片 NN',
   slidePictures  text           not null
@@ -54,9 +54,8 @@ create table db_b.product (
   comment '状态：0- 1- 2-',
   createTime     datetime       not null
   comment '创建时间 NN',
-  updateTime     datetime comment '更新时间'
-
-  -- , categoryId int comment 'category id FK'
+  updateTime     datetime comment '更新时间',
+  categoryId     int comment 'category id FK'
 )
   comment 'product table';
 
@@ -83,6 +82,12 @@ alter table db_b.user_info
   user_info_fk_userId
 foreign key (userId)
 references db_b.user (id);
+
+alter table db_b.product
+  add constraint
+  product_fk_categoryId
+foreign key (categoryId)
+references db_b.category (id);
 
 insert into db_b.category (title, createTime)
 value ('居家', now());
