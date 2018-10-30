@@ -24,7 +24,7 @@ public abstract class GenericServiceImpl<T extends Serializable, ID extends Numb
 
     @Override
     public List<T> queryList(String sqlId, Object parameter) {
-        return genericDao.queryAll();
+        return genericDao.queryList(sqlId, parameter);
     }
 
     @Override

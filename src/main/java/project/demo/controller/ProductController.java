@@ -81,7 +81,7 @@ public class ProductController extends BaseController {
 
     @RequestMapping("add")
     private String add() {
-        session.setAttribute("categories", categoryService.queryAll());
+        session.setAttribute("categories", categoryService.queryList("queryCategoryTree", null));
         return "redirect:/admin/product/add.jsp";
     }
 }
