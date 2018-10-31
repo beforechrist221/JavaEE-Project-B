@@ -30,7 +30,7 @@
         <servlet-name>default</servlet-name>
         <url-pattern>/assets/*</url-pattern>
         <url-pattern>/avatar/*</url-pattern>
-        <url-pattern>/admin/product/pictures/*</url-pattern>
+        <url-pattern>/pictures/*</url-pattern>
     </servlet-mapping>
 
     <listener>

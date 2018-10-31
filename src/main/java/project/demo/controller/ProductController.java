@@ -40,18 +40,11 @@ public class ProductController extends BaseController {
             @RequestParam MultipartFile[] slidePictureFiles,
             @RequestParam MultipartFile[] detailPictureFiles
     ) {
-
-        String coverFileName = System.nanoTime() + "." + FilenameUtils.getExtension(coverPictureFile.getOriginalFilename());
-        try {
-            coverPictureFile.transferTo(new File(application.getRealPath(COVER_FILE_PATH) + coverFileName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        product.setCoverPicture(coverFileName);
-        product.setSlidePictures(""); // TODO: 10/29/2018  
-        product.setDetailPictures(""); // TODO: 10/29/2018  
-        productService.create(product);
+        productService.create(productService.getProductWithPictures(
+                product,
+                coverPictureFile,
+                slidePictureFiles,
+                detailPictureFiles));
         return "redirect:/product/queryAll";
     }
 

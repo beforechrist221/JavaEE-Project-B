@@ -34,7 +34,7 @@
                 <td>${product.title}</td>
                 <td>${product.desc}</td>
                 <td>${product.price}</td>
-                <td><img src="pictures/cover/${product.coverPicture}"></td>
+                <td>${product.coverPicture}</td>
                 <td>${product.slidePictures}</td>
                 <td>${product.detailPictures}</td>
                 <td>${product.spec}</td>

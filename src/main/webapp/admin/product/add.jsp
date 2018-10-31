@@ -45,7 +45,6 @@
     </select>
     <br>
     CATEGORY
-    <%--${sessionScope.categories}--%>
     <select name="categoryId">
         <c:forEach var="category" items="${sessionScope.categories}">
             <option disabled="disabled">${category.title}</option>

@@ -50,6 +50,6 @@
         select c1.title as firstLevelTitle, c2.id, c2.title
         from db_b.category c1
                  left outer join db_b.category c2 on c1.id = c2.parentId
-        where c1.parentId is null
+        where c1.parentId is null /*c1 是一级类别*/
     </select>
 </mapper>
