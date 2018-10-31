@@ -16,6 +16,13 @@
 <header class="jumbotron"></header>
 <main class="container">
     <h1>detail</h1>
+    <h3>
+
+        <%--<%=request.getParameter("id")%>--%>
+        ${param.id}
+
+
+    </h3>
 </main>
 <footer class="jumbotron"></footer>
 <script src="assets/scripts/jquery.min.js"></script>

@@ -62,14 +62,7 @@
 <body>
 <nav id="nav" class="index navbar navbar-inverse"></nav>
 <header class="index jumbotron"></header>
-<main class="container">
-    <section class="col-md-3">
-        <article></article>
-        <p class="t"></p>
-        <p class="p"><b></b><s></s></p>
-        <p class="d"></p>
-    </section>
-</main>
+<main class="container"></main>
 <footer class="index jumbotron"></footer>
 <script src="assets/scripts/jquery.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.js"></script>
@@ -81,20 +74,26 @@
             type: 'post',
             dataType: 'json',
             success: function (data) {
-                console.log($.parseJSON(data[0].coverPicture)[0]);
-                console.log(data[0].title);
-                console.log(data[0].price);
-                console.log(data[0].originalPrice);
-                console.log(data[0].desc);
-
-                $('article').css('background-image', 'url(pictures/cover/' + $.parseJSON(data[0].coverPicture)[0] + ')');
-                $('p.t').text(data[0].title);
-                $('p.p b').text(data[0].price);
-                $('p.p s').text(data[0].originalPrice);
-                $('p.d').text(data[0].desc);
+                $.each(data, function (index, item) {
+                    $('main').append('<section id="' + item.id + '" class="col-md-3"><article></article><p class="t"></p><p class="p"><b></b><s></s></p><p class="d"></p></section>');
+                    var section = $('#' + item.id);
+                    section.find('article').css('background-image', 'url(pictures/cover/' + $.parseJSON(item.coverPicture)[0] + ')');
+                    section.find('p.t').text(item.title);
+                    section.find('p.p b').text(item.price);
+                    section.find('p.p s').text(item.originalPrice);
+                    section.find('p.d').text(item.desc);
+                });
             }
+        });
+
+        // future element: jQuery
+        $(document).on('click', 'article, p.t', function () {
+            var id = $(this).parent('section').attr('id');
+            window.location.href = 'detail.jsp?id=' + id;
         });
     });
 </script>
 </body>
 </html>
+
+
