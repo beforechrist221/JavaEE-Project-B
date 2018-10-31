@@ -89,10 +89,6 @@ public class ProductServiceImpl extends GenericServiceImpl<Product, Integer> imp
         String slidePicturesString = getPictureName(slidePictures, "slide");
         String detailPicturesString = getPictureName(detailPictures, "detail");
 
-        System.out.println(coverPictureString);
-        System.out.println(slidePicturesString);
-        System.out.println(detailPicturesString);
-
         product.setCoverPicture(coverPictureString);
         product.setSlidePictures(slidePicturesString);
         product.setDetailPictures(detailPicturesString);

@@ -18,6 +18,7 @@
                 <th>TITLE</th>
                 <th>DESC</th>
                 <th>PRICE</th>
+                <th>original PRICE</th>
                 <th>COVER PICTURE</th>
                 <th>SLIDE PICTURES</th>
                 <th>DETAIL PICTURES</th>
@@ -34,6 +35,7 @@
                 <td>${product.title}</td>
                 <td>${product.desc}</td>
                 <td>${product.price}</td>
+                <td>${product.originalPrice}</td>
                 <td>${product.coverPicture}</td>
                 <td>${product.slidePictures}</td>
                 <td>${product.detailPictures}</td>

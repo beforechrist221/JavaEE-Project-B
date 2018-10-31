@@ -13,7 +13,7 @@
 
         article {
             background: #ddd;
-            height: 800px;
+            height: 300px;
         }
 
         .avatar {

@@ -50,7 +50,7 @@
             <option disabled="disabled">${category.title}</option>
             <c:if test="${fn:length(category.categories) > 0}">
                 <c:forEach var="subCategory" items="${category.categories}">
-                    <option value="${subCategory.id}">-${subCategory.title}</option>
+                    <option value="${subCategory.id}">${subCategory.title}</option>
                 </c:forEach>
             </c:if>
         </c:forEach>

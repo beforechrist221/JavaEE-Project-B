@@ -126,5 +126,5 @@ select *
 from db_b.category c1 inner join db_b.category c2
 on c1.id = c2.parentId;
 
-truncate table db_b.product;
+
 -- String title, String desc, double price, String coverPicture, String slidePictures, String detailPictures, String spec, int stock, int status, String createTime, String updateTime
