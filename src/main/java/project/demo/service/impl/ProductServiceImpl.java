@@ -22,8 +22,6 @@ import java.util.Arrays;
 public class ProductServiceImpl extends GenericServiceImpl<Product, Integer> implements ProductService {
 
     private HttpServletRequest request;
-    private ServletContext application;
-
 
     @Override
     @Autowired
@@ -37,7 +35,7 @@ public class ProductServiceImpl extends GenericServiceImpl<Product, Integer> imp
     }
 
     private String getPictureName(MultipartFile[] multipartFiles, String type) {
-        application = request.getServletContext();
+        ServletContext application = request.getServletContext();
         String filePath;
         switch (type) {
             case "cover":

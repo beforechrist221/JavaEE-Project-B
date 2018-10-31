@@ -62,7 +62,7 @@
 <script>
     $(function () {
         $('span').on('click', function () {
-            $('<input type="file" name="slidePictureFiles"><br>').insertBefore($(this));
+            $('<input type="file" name="detailPictureFiles"><br>').insertBefore($(this));
         })
     });
 </script>
