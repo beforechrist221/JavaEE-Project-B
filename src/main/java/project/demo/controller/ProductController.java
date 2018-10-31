@@ -13,6 +13,7 @@ import project.demo.service.ProductService;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 @Controller
 @RequestMapping("product")
@@ -77,5 +78,11 @@ public class ProductController extends BaseController {
     private String add() {
         session.setAttribute("categories", categoryService.queryList("queryCategoryTree", null));
         return "redirect:/admin/product/add.jsp";
+    }
+
+    @RequestMapping("index")
+    @ResponseBody
+    private List<Product> index() {
+        return productService.queryList("queryIndexProducts", null);
     }
 }

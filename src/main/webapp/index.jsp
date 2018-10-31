@@ -1,7 +1,6 @@
-<%@ page import="java.util.Date" %>
-<%@ page import="java.text.SimpleDateFormat" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="commons/inc.jsp" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -41,5 +40,17 @@
 <script src="assets/scripts/jquery.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.js"></script>
 <script src="assets/scripts/global.js"></script>
+<script>
+    $(function () {
+        $.ajax({
+            url: '${ctx}/product/index',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                console.log(data);
+            }
+        });
+    });
+</script>
 </body>
 </html>

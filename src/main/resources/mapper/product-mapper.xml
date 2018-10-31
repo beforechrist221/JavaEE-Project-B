@@ -63,4 +63,10 @@
         FROM db_b.product
         WHERE product.id = #{id}
     </select>
+
+    <select id="queryIndexProducts" resultType="product">
+        select id, title, coverPicture, price, originalPrice, `desc`
+        from db_b.product
+        where status = 0
+    </select>
 </mapper>
