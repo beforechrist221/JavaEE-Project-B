@@ -63,6 +63,7 @@ public class ProductController extends BaseController {
     @RequestMapping("queryAll")
     private String queryAll() {
         session.setAttribute("list", productService.queryAll());
+        session.setAttribute("categories", categoryService.queryList("queryCategoryTree", null));
         return "redirect:/admin/product/list.jsp";
     }
 
