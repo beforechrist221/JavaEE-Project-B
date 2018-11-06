@@ -85,9 +85,8 @@
             item:1,
             thumbItem:5,
             slideMargin: 0,
-            // speed:500,
             auto:false,
-            // loop:true,
+            loop:true,
             vertical: true,
             verticalHeight:430,
             onSliderLoad: function() {
