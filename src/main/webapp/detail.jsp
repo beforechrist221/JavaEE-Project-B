@@ -9,20 +9,22 @@
     <style>
         @import "assets/bootstrap/css/bootstrap.css";
         @import "assets/styles/global.css";
+
+        section article {
+            border: 1px dashed #f00;
+        }
     </style>
 </head>
 <body>
 <nav id="nav" class="navbar navbar-inverse"></nav>
 <header class="jumbotron"></header>
 <main class="container">
-    <h1>detail</h1>
-    <h3>
-
-        <%--<%=request.getParameter("id")%>--%>
-        ${param.id}
-
-
-    </h3>
+    <section class="col-md-6">
+        <article>slider...</article>
+    </section>
+    <section class="col-md-6">
+        <article>info...</article>
+    </section>
 </main>
 <footer class="jumbotron"></footer>
 <script src="assets/scripts/jquery.min.js"></script>

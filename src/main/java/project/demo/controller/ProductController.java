@@ -85,4 +85,10 @@ public class ProductController extends BaseController {
     private List<Product> index() {
         return productService.queryList("queryIndexProducts", null);
     }
+
+    @RequestMapping("detail/{id}")
+    private String detail(@PathVariable int id) {
+        session.setAttribute("product", productService.queryById(id));
+        return "redirect:/detail.jsp";
+    }
 }
