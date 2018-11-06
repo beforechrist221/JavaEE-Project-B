@@ -25,6 +25,7 @@
     </style>
 </head>
 <body>
+<c:set var="p" value="${sessionScope.product}"/>
 <nav id="nav" class="navbar navbar-inverse"></nav>
 <header class="jumbotron"></header>
 <main class="container">
@@ -51,7 +52,14 @@
     </section>
     <section class="col-md-6">
         <article>
-            <%--${sessionScope.product.slidePictures}--%>
+            <p class="title">${p.title}</p>
+            <p class="desc">${p.desc}</p>
+            <p class="price"><span class="price">￥${p.price}</span><span class="price">￥${p.originalPrice}</span></p>
+            <p class="number">数量 </p>
+            <p class="btn">
+                <button class="btn btn-danger">立即购买</button>
+                <button class="btn btn-info"><span class="glyphicon glyphicon-shopping-cart"></span> 加入购物车</button>
+            </p>
         </article>
     </section>
     <section class="col-md-8">
