@@ -2,6 +2,7 @@ package project.demo.service.impl;
 
 import project.demo.dao.GenericDao;
 import project.demo.service.GenericService;
+import project.demo.util.Pagination;
 
 import java.io.Serializable;
 import java.util.List;
@@ -55,5 +56,15 @@ public abstract class GenericServiceImpl<T extends Serializable, ID extends Numb
     @Override
     public void modify(String sqlId, Object parameter) {
         genericDao.modify(sqlId, parameter);
+    }
+
+    @Override
+    public Pagination<T> queryAll(int currentPage) {
+        return genericDao.queryAll(currentPage);
+    }
+
+    @Override
+    public Pagination<T> query(String sqlId, Object parameter, int currentPage) {
+        return genericDao.query(sqlId, parameter, currentPage);
     }
 }

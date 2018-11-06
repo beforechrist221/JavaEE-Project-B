@@ -7,6 +7,7 @@
     <body>
         <h1>Product INDEX</h1>
         <p><a href="${ctx}/product/add">ADD</a></p>
-        <p><a href="${ctx}/product/queryAll">LIST</a></p>
+        <%--<p><a href="${ctx}/product/queryAll/1">LIST</a></p>--%>
+        <p><a href="${ctx}/product/queryAllPages">LIST</a></p>
     </body>
 </html>

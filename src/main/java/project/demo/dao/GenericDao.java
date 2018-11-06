@@ -1,5 +1,7 @@
 package project.demo.dao;
 
+import project.demo.util.Pagination;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -22,4 +24,8 @@ public interface GenericDao<T extends Serializable, ID extends Number> {
     T queryOne(String sqlId, Object parameter);
 
     void modify(String sqlId, Object parameter);
+
+    Pagination<T> queryAll(int currentPage);
+
+    Pagination<T> query(String sqlId, Object parameter, int currentPage);
 }

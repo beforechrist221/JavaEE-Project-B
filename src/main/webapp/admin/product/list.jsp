@@ -29,7 +29,7 @@
                 <th>UPDATETIME</th>
                 <th colspan="2">OPERATION</th>
             </tr>
-            <c:forEach var="product" items="${sessionScope.list}" varStatus="vs">
+            <c:forEach var="product" items="${sessionScope.pagination.list}" varStatus="vs">
             <tr>
                 <td>${vs.count}</td>
                 <td>${product.title}</td>
@@ -49,5 +49,8 @@
             </tr>
             </c:forEach>
         </table>
+        <c:import url="${ctx}/commons/page.jsp">
+            <c:param name="path" value="product/${sessionScope.pagination.sqlId}"/>
+        </c:import>
     </body>
 </html>

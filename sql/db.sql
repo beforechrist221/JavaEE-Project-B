@@ -128,3 +128,12 @@ on c1.id = c2.parentId;
 
 
 -- String title, String desc, double price, String coverPicture, String slidePictures, String detailPictures, String spec, int stock, int status, String createTime, String updateTime
+
+select *
+from db_b.product;
+
+-- MySQL
+
+select *
+from db_b.product
+limit 3 offset 9;
