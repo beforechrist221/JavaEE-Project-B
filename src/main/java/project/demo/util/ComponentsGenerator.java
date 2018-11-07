@@ -20,7 +20,7 @@ class ComponentsGenerator {
     private static final String DATABASE = "db_b";
 
     private static final String CODE_PATH = "src/main/java/";
-    private static final String PAGE_PATH = "src/main/webapp/admin/";
+    private static final String PAGE_PATH = "src/main/webapp/portal/";
     private static final String CONF_PATH = "src/main/resources/";
     private static final String PATH = CODE_PATH + PACKAGE.replace(".", "/");
     private static final String[] CODE_TPLS = {"Model", "Dao", "Dao.Impl", "Service", "Service.Impl", "Controller"};

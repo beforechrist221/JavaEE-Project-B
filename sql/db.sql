@@ -77,6 +77,31 @@ create table db_b.category (
 )
   comment 'category table';
 
+-- address table
+drop table if exists db_b.address;
+create table db_b.address (
+  id       int                   auto_increment primary key
+  comment 'id PK',
+  province varchar(255) not null
+  comment 'province NN',
+  city     varchar(255) not null
+  comment 'city NN',
+  district varchar(255) not null
+  comment 'district NN',
+  town     varchar(255) not null
+  comment 'town NN',
+  detail   varchar(255) not null
+  comment 'detail NN',
+  name     varchar(255) not null
+  comment 'name NN',
+  mobile   varchar(255) not null
+  comment 'mobile NN',
+  status   int          not null default 0
+  comment 'status 0: default address; 1:',
+  userId   int comment 'user id FK'
+)
+  comment 'address table';
+
 alter table db_b.user_info
   add constraint
   user_info_fk_userId
@@ -88,6 +113,12 @@ alter table db_b.product
   product_fk_categoryId
 foreign key (categoryId)
 references db_b.category (id);
+
+alter table db_b.address
+  add constraint
+  address_fk_userId
+foreign key (userId)
+references db_b.user (id);
 
 insert into db_b.category (title, createTime)
 value ('居家', now());
@@ -123,9 +154,8 @@ from db_b.category;
 select now();
 
 select *
-from db_b.category c1 inner join db_b.category c2
-on c1.id = c2.parentId;
-
+from db_b.category c1
+       inner join db_b.category c2 on c1.id = c2.parentId;
 
 -- String title, String desc, double price, String coverPicture, String slidePictures, String detailPictures, String spec, int stock, int status, String createTime, String updateTime
 
@@ -137,3 +167,12 @@ from db_b.product;
 select *
 from db_b.product
 limit 3 offset 9;
+
+select *
+from db_b.address;
+
+set foreign_key_checks  = 1;
+
+truncate table db_b.user;
+
+truncate table db_b.user_info;
