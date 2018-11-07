@@ -1,7 +1,7 @@
 $(function () {
-    $('nav').load('../nav.jsp');
-    $('header').load('../header.html');
-    $('footer').load('../footer.html');
+    $('nav').load('${ctx}/nav.jsp');
+    $('header').load('${ctx}/header.html');
+    $('footer').load('${ctx}/footer.html');
     $('nav.index').load('nav.jsp');
     $('header.index').load('header.html');
     $('footer.index').load('footer.html');

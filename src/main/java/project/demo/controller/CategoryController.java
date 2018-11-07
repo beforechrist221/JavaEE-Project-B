@@ -40,7 +40,7 @@ public class CategoryController extends BaseController {
     private String queryAll() {
         session.setAttribute("list", categoryService.queryAll());
         session.setAttribute("categories", categoryService.queryList("queryFistLevelCategory", null));
-        return "redirect:/admin/category/list.jsp";
+        return "redirect:/admin/category/~list.jsp";
     }
 
     @RequestMapping("queryById/{id}")

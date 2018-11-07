@@ -45,7 +45,7 @@
             </c:if>
             <c:if test="${sessionScope.user ne null}">
                 <li><a class="pop" href="#" data-toggle="popover" data-container="body" data-trigger="hover" data-placement="bottom" title="Header..."
-                       data-content="<a href=&quot;/user/signOut&quot;>Sign out</a>">
+                       data-content="<p><a href=&quot;/address/queryAll&quot;>地址管理</a></p><p><a href=&quot;/user/signOut&quot;>退出</a></p>">
                     <img class="avatar img-circle" src="/avatar/${sessionScope.user.userInfo.avatar}"> ${sessionScope.user.email}</a></li>
             </c:if>
         </ul>

@@ -65,7 +65,7 @@ public class ProductController extends BaseController {
     private String queryAll(@PathVariable int currentPage) {
         session.setAttribute("pagination", productService.queryAll(currentPage));
         session.setAttribute("categories", categoryService.queryList("queryCategoryTree", null));
-        return "redirect:/admin/product/list.jsp";
+        return "redirect:/admin/product/~list.jsp";
     }
 
     @RequestMapping("queryAllPages")
