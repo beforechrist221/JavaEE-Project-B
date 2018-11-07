@@ -22,6 +22,53 @@
         .lSGallery {
             background-color: #f4f4f4;
         }
+
+        .number input {
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .number span,
+        .number input {
+            vertical-align: middle;
+            display: inline-block;
+            width: 25px;
+            text-align: center;
+            border: 1px solid #ddd;
+            height: 25px;
+        }
+
+        .number input {
+            border-left: none;
+            border-right: none;
+            width: 40px;
+        }
+
+        .number input:focus {
+            outline-width: 0;
+        }
+
+        .number span {
+            font-size: 18px;
+            line-height: 25px;
+            user-select: none;
+        }
+
+        .cursor-disabled {
+            cursor: not-allowed;
+            color: #ddd;
+        }
+
+        .cursor-enabled {
+            cursor: pointer;
+            color: #333;
+        }
+
+        #detail img {
+            width: 100%;
+        }
+
     </style>
 </head>
 <body>
@@ -39,7 +86,8 @@
             <p class="title">${p.title}</p>
             <p class="desc">${p.desc}</p>
             <p class="price"><span class="price">￥${p.price}</span><span class="price">￥${p.originalPrice}</span></p>
-            <p class="number">数量 </p>
+            <p class="number">数量 <span id="sub">-</span><input id="num" value="1" pattern="\d{1,2}"><span
+                    id="add">+</span></p>
             <p class="btn">
                 <button class="btn btn-danger">立即购买</button>
                 <button class="btn btn-info"><span class="glyphicon glyphicon-shopping-cart"></span> 加入购物车</button>
@@ -47,7 +95,7 @@
         </article>
     </section>
     <section class="col-md-8">
-        <article>detail</article>
+        <article id="detail" title='${p.detailPictures}'></article>
     </section>
     <section class="col-md-4">
         <article>hot</article>
@@ -63,9 +111,8 @@
 
         var imageGallery = $('#image-gallery');
         var slidePictures = imageGallery.attr('title');
-        var slidePicturesArray = slidePictures.replace(/[\[\]"]/g, '').split(',');
 
-        $.each(slidePicturesArray, function (index, item) {
+        $.each($.parseJSON(slidePictures), function (index, item) {
             var list = '<li data-thumb="pictures/slide/' + item + '"><img src="pictures/slide/' + item + '"/></li>';
             imageGallery.append(list);
         });
@@ -87,6 +134,44 @@
             onSliderLoad: function () {
                 $('#image-gallery').removeClass('cS-hidden');
             }
+        });
+
+        /* number begin */
+        var sub = $('#sub');
+        var add = $('#add');
+        var num = $('#num');
+
+        sub.addClass('cursor-disabled');
+        add.addClass('cursor-enabled');
+
+        add.on('click', function () {
+            var number = num.val();
+            if (number < 99) {
+                num.val(++number);
+            } else {
+                add.removeClass('cursor-enabled').addClass('cursor-disabled')
+            }
+        });
+
+        num.on('keyup', function () {
+            var number = num.val();
+            if (number <= 0) {
+                sub.removeClass('cursor-enabled').addClass('cursor-disabled');
+            } else if (number < 99) {
+                sub.removeClass('cursor-disabled').addClass('cursor-enabled');
+                add.removeClass('cursor-disabled').addClass('cursor-enabled');
+            } else {
+                add.removeClass('cursor-enabled').addClass('cursor-disabled');
+            }
+        });
+        /* number end */
+
+        var detail = $('#detail');
+        var detailPictures = detail.attr('title');
+
+        $.each($.parseJSON(detailPictures), function (index, item) {
+            var img = '<img src="pictures/detail/' + item + '"/>';
+            detail.append(img);
         });
     });
 </script>
