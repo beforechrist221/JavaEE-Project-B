@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="commons/inc.jsp"%>
+<%@ include file="commons/inc.jsp" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -31,23 +31,7 @@
 <main class="container">
     <section class="col-md-6">
         <article id="slider-pictures">
-            <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
-                <li data-thumb="pictures/slide/1654439170247131.png">
-                    <img src="pictures/slide/1654439170247131.png" />
-                </li>
-                <li data-thumb="pictures/slide/1654439171280711.jpg">
-                    <img src="pictures/slide/1654439171280711.jpg" />
-                </li>
-                <li data-thumb="pictures/slide/1654439172183524.jpg">
-                    <img src="pictures/slide/1654439172183524.jpg" />
-                </li>
-                <li data-thumb="pictures/slide/1654439173166926.jpg">
-                    <img src="pictures/slide/1654439173166926.jpg" />
-                </li>
-                <li data-thumb="pictures/slide/1654439173995234.jpg">
-                    <img src="pictures/slide/1654439173995234.jpg" />
-                </li>
-            </ul>
+            <ul id="image-gallery" class="gallery list-unstyled cS-hidden" title='${p.slidePictures}'></ul>
         </article>
     </section>
     <section class="col-md-6">
@@ -75,21 +59,32 @@
 <script src="assets/scripts/global.js"></script>
 <script src="assets/scripts/lightslider.js"></script>
 <script>
-    $(document).ready(function() {
-        $("#content-slider").lightSlider({
-            loop:true,
-            keyPress:true
+    $(document).ready(function () {
+
+        var imageGallery = $('#image-gallery');
+        var slidePictures = imageGallery.attr('title');
+        var slidePicturesArray = slidePictures.replace(/[\[\]"]/g, '').split(',');
+
+        $.each(slidePicturesArray, function (index, item) {
+            var list = '<li data-thumb="pictures/slide/' + item + '"><img src="pictures/slide/' + item + '"/></li>';
+            imageGallery.append(list);
         });
-        $('#image-gallery').lightSlider({
-            gallery:true,
-            item:1,
-            thumbItem:5,
+
+        $("#content-slider").lightSlider({
+            loop: true,
+            keyPress: true
+        });
+
+        imageGallery.lightSlider({
+            gallery: true,
+            item: 1,
+            thumbItem: 5,
             slideMargin: 0,
-            auto:false,
-            loop:true,
+            auto: false,
+            loop: true,
             vertical: true,
-            verticalHeight:430,
-            onSliderLoad: function() {
+            verticalHeight: 430,
+            onSliderLoad: function () {
                 $('#image-gallery').removeClass('cS-hidden');
             }
         });
