@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ include file="commons/inc.jsp"%>
+<%@ include file="commons/inc.jsp" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -9,6 +9,10 @@
     <style>
         @import "assets/bootstrap/css/bootstrap.css";
         @import "assets/styles/global.css";
+
+        .input-group {
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
@@ -19,9 +23,9 @@
     <form action="${ctx}/mail/check" method="post">
         <div class="input-group">
             <label for="email">邮箱</label>
-            <input id="email" name="email" class="form-control">
+            <input id="email" name="email" class="form-control input-lg">
         </div>
-            <button class="btn btn-primary">提交</button>
+        <button class="btn btn-primary btn-lg">提交</button>
     </form>
 </main>
 <footer class="jumbotron"></footer>
