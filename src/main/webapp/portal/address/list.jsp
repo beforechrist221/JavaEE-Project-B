@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>detail page</title>
+    <title>地址列表</title>
     <style>
         @import "${ctx}/assets/bootstrap/css/bootstrap.css";
         @import "${ctx}/assets/styles/global.css";
@@ -30,12 +30,12 @@
                     <hr/>
                     <table class="table table-striped table-bordered table-hover">
                         <tr>
-                            <th>序号</th>
-                            <th>收货人</th>
-                            <th>地址</th>
-                            <th>联系方式</th>
-                            <th colspan="2">操作</th>
-                            <th>默认地址</th>
+                            <th class="text-center">序号</th>
+                            <th class="text-center">收货人</th>
+                            <th class="text-center">地址</th>
+                            <th class="text-center">联系方式</th>
+                            <th class="text-center" colspan="2">操作</th>
+                            <th class="text-center">默认地址</th>
                         </tr>
                         <c:forEach var="address" items="${sessionScope.list}" varStatus="vs">
                             <tr>

@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>detail page</title>
+    <title>添加地址</title>
     <style>
         @import "${ctx}/assets/bootstrap/css/bootstrap.css";
         @import "${ctx}/assets/styles/global.css";
@@ -66,7 +66,7 @@
     var $town = $('#address select[name="town"]');
     var townFormat = function (info) {
         $town.hide().empty();
-        if (info['code'] % 1e4 && info['code'] < 7e5) {	//是否为“区”且不是港澳台地区
+        if (info['code'] % 1e4 && info['code'] < 7e5) {
             $.ajax({
                 url: '${ctx}/assets/data/town/' + info['code'] + '.json',
                 dataType: 'json',
@@ -80,9 +80,6 @@
         }
     };
     $('#address').citys({
-        // province: '福建',
-        // city: '厦门',
-        // area: '思明',
         onChange: function (info) {
             townFormat(info);
         }
