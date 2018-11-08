@@ -84,10 +84,10 @@ create table db_b.address (
   comment 'id PK',
   province varchar(255) not null
   comment 'province NN',
-  city     varchar(255) not null
-  comment 'city NN',
-  district varchar(255) not null
-  comment 'district NN',
+  city     varchar(255)
+  comment 'city',
+  area varchar(255) not null
+  comment 'area NN',
   town     varchar(255) not null
   comment 'town NN',
   detail   varchar(255) not null

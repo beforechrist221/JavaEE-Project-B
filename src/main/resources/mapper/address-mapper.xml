@@ -8,7 +8,7 @@
         INSERT INTO db_b.address (
             province, 
             city, 
-            district, 
+            area,
             town, 
             detail, 
             name, 
@@ -19,7 +19,7 @@
         VALUES (
             #{province}, 
             #{city}, 
-            #{district}, 
+            #{area},
             #{town}, 
             #{detail}, 
             #{name}, 
@@ -37,7 +37,7 @@
         SET
             province = #{province}, 
             city = #{city}, 
-            district = #{district}, 
+            area = #{area},
             town = #{town}, 
             detail = #{detail}, 
             name = #{name}, 

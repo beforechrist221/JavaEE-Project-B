@@ -41,7 +41,13 @@
                             <tr>
                                 <td>${vs.count}</td>
                                 <td>${address.name}</td>
-                                <td>${address.province} ${address.city} ${address.district} ${address.town} ${address.detail}</td>
+                                <td>
+                                        ${address.province}
+                                        ${address.city}
+                                        ${address.area}
+                                        ${address.town}
+                                        ${address.detail}
+                                </td>
                                 <td>${address.mobile}</td>
                                 <td><a href="${ctx}/address/queryById/${address.id}">编辑</a></td>
                                 <td><a class="delete" href="${ctx }/address/remove/${address.id}"

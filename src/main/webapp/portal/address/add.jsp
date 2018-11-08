@@ -73,7 +73,7 @@
                 success: function (town) {
                     $town.show();
                     for (i in town) {
-                        $town.append('<option value="' + i + '">' + town[i] + '</option>');
+                        $town.append('<option value="' + town[i] + '">' + town[i] + '</option>');
                     }
                 }
             });

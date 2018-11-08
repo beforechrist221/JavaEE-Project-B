@@ -10,7 +10,7 @@
             <input type="hidden" name="id" value="${sessionScope.address.id}">
             PROVINCE: <input name="province" value="${sessionScope.address.province}"><br>
             CITY: <input name="city" value="${sessionScope.address.city}"><br>
-            DISTRICT: <input name="district" value="${sessionScope.address.district}"><br>
+            AREA: <input name="district" value="${sessionScope.address.area}"><br>
             TOWN: <input name="town" value="${sessionScope.address.town}"><br>
             DETAIL: <input name="detail" value="${sessionScope.address.detail}"><br>
             NAME: <input name="name" value="${sessionScope.address.name}"><br>
