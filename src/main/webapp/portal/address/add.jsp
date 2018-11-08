@@ -9,6 +9,13 @@
     <style>
         @import "${ctx}/assets/bootstrap/css/bootstrap.css";
         @import "${ctx}/assets/styles/global.css";
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .form-check {
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -20,13 +27,14 @@
     </section>
     <section class="col-md-10">
         <article>
-            <h1>添加地址</h1>
+            <h1 class="input-group col-md-8 col-md-offset-2">添加地址</h1>
             <form action="${ctx}/address/create" method="post">
-                <div id="address" class="citys">
-                    <select name="province"></select>
-                    <select name="city"></select>
-                    <select name="area"></select>
-                    <select name="town"></select>
+                <div id="address" class="input-group col-md-8 col-md-offset-2">
+                    <b>所在地区</b>
+                    <select class="form-control" name="province"></select>
+                    <select class="form-control" name="city"></select>
+                    <select class="form-control" name="area"></select>
+                    <select class="form-control" name="town"></select>
                 </div>
                 <div class="input-group col-md-8 col-md-offset-2">
                     <label for="detail">详细地址</label>
@@ -40,11 +48,11 @@
                     <label for="mobile">联系方式</label>
                     <input id="mobile" class="form-control" name="mobile" placeholder="MOBILE" value="18612345678">
                 </div>
-                <div class="input-group col-md-8 col-md-offset-2">
-                    <input id="status" class="checkbox" type="checkbox" name="status" value="0" checked="checked"><br>
-                    <label for="status">设为默认地址</label>
+                <div class="form-check col-md-8 col-md-offset-2">
+                    <input id="status" class="form-check-input" type="checkbox" name="status" value="0" checked="checked">
+                    <label class="form-check-label" for="status">设为默认地址</label>
                 </div>
-                <button class="btn btn-success btn-sm" type="submit">添加</button>
+                <button class="btn btn-success btn-sm col-md-8 col-md-offset-2" type="submit">添加</button>
             </form>
         </article>
     </section>
