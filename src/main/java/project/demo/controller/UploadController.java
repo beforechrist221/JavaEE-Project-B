@@ -20,6 +20,6 @@ public class UploadController extends BaseController {
         for (MultipartFile photoFile : photoFiles) {
             photoFile.transferTo(new File(photoPath, System.nanoTime() + ".png"));
         }
-        return "redirect:/upload-test.jsp";
+        return "redirect:/upload-edit.jsp";
     }
 }
