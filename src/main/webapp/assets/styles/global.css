@@ -8,3 +8,7 @@ footer.jumbotron {
     margin-top: 30px;
     margin-bottom: 0;
 }
+
+img.avatar {
+    height: 20px;
+}

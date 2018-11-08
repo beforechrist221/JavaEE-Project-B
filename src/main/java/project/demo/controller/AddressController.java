@@ -42,7 +42,7 @@ public class AddressController extends BaseController {
     @RequestMapping("queryAll")
     private String queryAll() {
         session.setAttribute("list", addressService.queryAll());
-        return "redirect:/portal/address/~list.jsp";
+        return "redirect:/portal/address/list.jsp";
     }
 
     @RequestMapping("queryById/{id}")
