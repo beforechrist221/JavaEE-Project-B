@@ -69,6 +69,9 @@
             width: 100%;
         }
 
+        div.row {
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 <body>
@@ -76,30 +79,35 @@
 <nav id="nav" class="navbar navbar-inverse"></nav>
 <header class="jumbotron"></header>
 <main class="container">
-    <section class="col-md-6">
-        <article id="slider-pictures">
-            <ul id="image-gallery" class="gallery list-unstyled cS-hidden" title='${p.slidePictures}'></ul>
-        </article>
-    </section>
-    <section class="col-md-6">
-        <article>
-            <p class="title">${p.title}</p>
-            <p class="desc">${p.desc}</p>
-            <p class="price"><span class="price">￥${p.price}</span><span class="price">￥${p.originalPrice}</span></p>
-            <p class="number">数量 <span id="sub">-</span><input id="num" value="1" pattern="\d{1,2}"><span
-                    id="add">+</span></p>
-            <p class="btn">
-                <button class="btn btn-danger">立即购买</button>
-                <button class="btn btn-info"><span class="glyphicon glyphicon-shopping-cart"></span> 加入购物车</button>
-            </p>
-        </article>
-    </section>
-    <section class="col-md-8">
-        <article id="detail" title='${p.detailPictures}'></article>
-    </section>
-    <section class="col-md-4">
-        <article>hot</article>
-    </section>
+    <div class="row">
+        <section class="col-md-6">
+            <article id="slider-pictures">
+                <ul id="image-gallery" class="gallery list-unstyled cS-hidden" title='${p.slidePictures}'></ul>
+            </article>
+        </section>
+        <section class="col-md-6">
+            <article>
+                <p class="title">${p.title}</p>
+                <p class="desc">${p.desc}</p>
+                <p class="price"><span class="price">￥${p.price}</span><span class="price">￥${p.originalPrice}</span>
+                </p>
+                <p class="number">数量 <span id="sub">-</span><input id="num" value="1" pattern="\d{1,2}"><span
+                        id="add">+</span></p>
+                <p class="btn">
+                    <button class="btn btn-danger">立即购买</button>
+                    <button class="btn btn-info"><span class="glyphicon glyphicon-shopping-cart"></span> 加入购物车</button>
+                </p>
+            </article>
+        </section>
+    </div>
+    <div class="row">
+        <section class="col-md-8">
+            <article id="detail" title='${p.detailPictures}'></article>
+        </section>
+        <section class="col-md-4">
+            <article>hot</article>
+        </section>
+    </div>
 </main>
 <footer class="jumbotron"></footer>
 <script src="assets/scripts/jquery.min.js"></script>
