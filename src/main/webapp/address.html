@@ -5,7 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<div id="demo3" class="citys">
+<div id="address" class="citys">
     <p>
         <select name="province"></select>
         <select name="city"></select>
@@ -17,7 +17,7 @@
 <script src="assets/scripts/jquery.min.js"></script>
 <script src="assets/scripts/jquery.cities.js"></script>
 <script>
-    var $town = $('#demo3 select[name="town"]');
+    var $town = $('#address select[name="town"]');
     var townFormat = function(info){
         $town.hide().empty();
         if(info['code']%1e4&&info['code']<7e5){	//是否为“区”且不是港澳台地区
@@ -33,7 +33,7 @@
             });
         }
     };
-    $('#demo3').citys({
+    $('#address').citys({
         province:'福建',
         city:'厦门',
         area:'思明',

@@ -34,7 +34,7 @@
             getApi = getApi||function(){};
         }
         var defaults = {
-            dataUrl:'assets/data/list.json',     //数据库地址
+            dataUrl:'../../assets/data/list.json',     //数据库地址
             crossDomain: true,        //是否开启跨域
             dataType:'json',          //数据库类型:'json'或'jsonp'
             provinceField:'province', //省份字段名
