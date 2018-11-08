@@ -26,4 +26,6 @@
     <bean id="freemarker" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
         <property name="templateLoaderPath" value="classpath:template"/>
     </bean>
+
+    <import resource="spring-mail.xml"/>
 </beans>
