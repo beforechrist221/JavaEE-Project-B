@@ -24,7 +24,38 @@ public class AddressController extends BaseController {
         User user = (User) session.getAttribute("user");
         address.setUserId(user.getId());
         addressService.create(address);
+        if (address.getStatus() == 1) {
+            unsetDefaultAddress(address.getId());
+        }
         return "redirect:/address/queryAll";
+    }
+
+    @RequestMapping("setDefault/{id}")
+    private String setDefault(@PathVariable int id) {
+        setDefaultAddress(id);
+        unsetDefaultAddress(id);
+        return "redirect:/address/queryAll";
+    }
+
+
+    /**
+     *
+     * @param id 要设为默认地址的 ID
+     *
+     * 把当前地址设置为默认
+     */
+    private void setDefaultAddress(int id) {
+        addressService.modify("setDefaultAddress", id);
+    }
+
+    /**
+     *
+     * @param id 新创建的默认地址的 ID
+     *
+     * 把其他地址之设置为非默认
+     */
+    private void unsetDefaultAddress(int id) {
+        addressService.modify("unsetDefaultAddress", id);
     }
 
     @RequestMapping("remove/{id}")
@@ -36,6 +67,9 @@ public class AddressController extends BaseController {
     @RequestMapping("modify")
     private String modify(Address address) {
         addressService.modify(address);
+        if (address.getStatus() == 1) {
+            unsetDefaultAddress(address.getId());
+        }
         return "redirect:/address/queryAll";
     }
 

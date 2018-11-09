@@ -97,7 +97,7 @@ create table db_b.address (
   mobile   varchar(255) not null
   comment 'mobile NN',
   status   int          not null default 0
-  comment 'status 0: default address; 1:',
+  comment 'status 1: default address',
   userId   int comment 'user id FK'
 )
   comment 'address table';

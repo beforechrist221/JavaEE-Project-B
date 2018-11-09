@@ -5,54 +5,46 @@
 
 <mapper namespace="address">
     <insert id="create" parameterType="address" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO db_b.address (
-            province, 
-            city, 
-            area,
-            town, 
-            detail, 
-            name, 
-            mobile, 
-            status, 
-            userId
-        )
-        VALUES (
-            #{province}, 
-            #{city}, 
-            #{area},
-            #{town}, 
-            #{detail}, 
-            #{name}, 
-            #{mobile}, 
-            #{status}, 
-            #{userId}
-        )
+        INSERT INTO db_b.address (province, city, area, town, detail, name, mobile, status, userId)
+        VALUES (#{province}, #{city}, #{area}, #{town}, #{detail}, #{name}, #{mobile}, #{status}, #{userId})
     </insert>
     <delete id="remove">
-        DELETE FROM db_b.address
+        DELETE
+        FROM db_b.address
         WHERE address.id = #{id}
     </delete>
     <update id="modify">
         UPDATE db_b.address
-        SET
-            province = #{province}, 
-            city = #{city}, 
-            area = #{area},
-            town = #{town}, 
-            detail = #{detail}, 
-            name = #{name}, 
-            mobile = #{mobile}, 
-            status = #{status}
+        SET province = #{province},
+            city     = #{city},
+            area     = #{area},
+            town     = #{town},
+            detail   = #{detail},
+            name     = #{name},
+            mobile   = #{mobile},
+            status   = #{status}
         WHERE address.id = #{id}
     </update>
     <select id="queryAll" resultType="address">
         SELECT *
         FROM db_b.address
-        ORDER BY id
+        ORDER BY status desc, id
     </select>
     <select id="queryById" resultType="address">
         SELECT *
         FROM db_b.address
         WHERE address.id = #{id}
     </select>
+    <update id="unsetDefaultAddress" parameterType="int">
+        update
+                db_b.address
+        set status = 0
+        where id != #{id}
+    </update>
+    <update id="setDefaultAddress" parameterType="int">
+        update
+                db_b.address
+        set status = 1
+        where id = #{id}
+    </update>
 </mapper>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="../../commons/inc.jsp" %>
 <html>
 <head>
@@ -52,15 +52,14 @@
                                 <td><a href="${ctx}/address/queryById/${address.id}">编辑</a></td>
                                 <td><a class="delete" href="${ctx }/address/remove/${address.id}"
                                        onclick="return del()">删除</a>
-                                    <c:if test="${address.status eq 0}">
+                                    <c:if test="${address.status eq 1}">
                                 <td>
                                     <button class="btn btn-warning btn-sm">默认地址</button>
                                 </td>
                                 </c:if>
-                                <c:if test="${address.status eq 1}">
-                                    <td><a href="#">设为默认地址</a></td>
+                                <c:if test="${address.status eq 0}">
+                                    <td><a href="${ctx}/address/setDefault/${address.id}">设为默认地址</a></td>
                                 </c:if>
-                                </td>
                             </tr>
                         </c:forEach>
                     </table>

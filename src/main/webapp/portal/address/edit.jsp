@@ -51,7 +51,7 @@
                     <input id="mobile" class="form-control" name="mobile" placeholder="MOBILE" value="${a.mobile}">
                 </div>
                 <div class="form-check col-md-8 col-md-offset-2">
-                    <input id="status" class="form-check-input" type="checkbox" name="status" value="0" checked="checked">
+                    <input id="status" class="form-check-input" type="checkbox" name="status" value="1" checked="checked">
                     <label class="form-check-label" for="status">设为默认地址</label>
                 </div>
                 <button class="btn btn-success btn-sm col-md-8 col-md-offset-2" type="submit">保存</button>
