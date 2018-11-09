@@ -19,4 +19,9 @@
             tokenTime = #{tokenTime}
         where userId = #{userId}
     </update>
+    <select id="queryUserInfoByUserId" parameterType="int" resultType="userInfo">
+        select *
+        from db_b.user_info
+        where userId = #{userId}
+    </select>
 </mapper>

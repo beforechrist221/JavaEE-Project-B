@@ -29,4 +29,9 @@
                  inner join db_b.user_info ui on u.id = ui.userId
         where email = #{email}
     </select>
+    <update id="modifyPassword" parameterType="user">
+        update db_b.user
+        set password = #{password}
+        where id = #{id}
+    </update>
 </mapper>

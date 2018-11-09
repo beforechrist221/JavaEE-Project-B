@@ -4,6 +4,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -68,9 +69,8 @@ public class UserController extends BaseController {
             userInfoService.modify("updateToken", userInfo);
 
             token = DigestUtils.md5Hex(token);
-            System.out.println(token);
 
-            String link = "http://localhost:8080/resetPassword/" + user.getId() + "/" + token;
+            String link = "http://localhost:8080/user/resetPassword/" + user.getId() + "/" + token;
 
             Mail mail = new Mail();
             mail.setFromAddress("hunjitianya@qq.com");
@@ -85,6 +85,33 @@ public class UserController extends BaseController {
         }
         request.setAttribute("errorMessage", "邮箱不存在");
         return "/email.jsp";
+    }
+
+    @RequestMapping("resetPassword/{id}/{token}")
+    private String resetPassword(@PathVariable int id, @PathVariable String token) {
+        UserInfo userInfo = userInfoService.queryOne("queryUserInfoByUserId", id);
+        String tokenString = userInfo.getToken();
+        long tokenTime = userInfo.getTokenTime();
+        if (tokenString.equals(token)) {
+            long currentTime = System.currentTimeMillis();
+            if ((currentTime - tokenTime) / 1000 / 60 / 60 < 1) {
+                session.setAttribute("id", id);
+                return "redirect:/resetPassword.jsp";
+            }
+        }
+        request.setAttribute("message", "链接失效");
+        return "/error.jsp";
+    }
+
+    @RequestMapping("modifyPassword")
+    private String modifyPassword(@RequestParam String password) {
+        StrongPasswordEncryptor strongPasswordEncryptor = new StrongPasswordEncryptor();
+        password = strongPasswordEncryptor.encryptPassword(password);
+        User user = new User();
+        user.setId((Integer) session.getAttribute("id"));
+        user.setPassword(password);
+        userService.modify("modifyPassword", user);
+        return "redirect:/sign-in.jsp";
     }
 
     @RequestMapping("signUp")
