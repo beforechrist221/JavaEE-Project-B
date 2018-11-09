@@ -10,7 +10,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">My Website</a>
+        <a class="navbar-brand" href="/">首页</a>
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -46,7 +46,7 @@
             <c:if test="${sessionScope.user ne null}">
                 <li><a class="pop" href="#" data-toggle="popover" data-container="body" data-trigger="hover" data-placement="bottom" title="Header..."
                        data-content="<p><a href=&quot;/address/queryAll&quot;>地址管理</a></p><p><a href=&quot;/user/signOut&quot;>退出</a></p>">
-                    <img class="avatar img-circle" src="/avatar/${sessionScope.user.userInfo.avatar}"> ${sessionScope.user.email}</a></li>
+                    <img id="avatar" class="avatar img-circle" src="/avatar/${sessionScope.user.userInfo.avatar}"> ${sessionScope.user.email}</a></li>
             </c:if>
         </ul>
     </div><!-- /.navbar-collapse -->

@@ -72,6 +72,54 @@
         div.row {
             margin-bottom: 30px;
         }
+
+        p.title {
+            font-weight: bolder;
+            font-size: 1.4em;
+        }
+
+        span.price:before {
+            content: '￥';
+            color: #f00;
+        }
+
+        span.price {
+            color: #f00;
+            font-size: 1.2em;
+            font-weight: bolder;
+        }
+
+        span.originPrice {
+            text-decoration: line-through;
+        }
+
+        span.originPrice:before {
+            content: '￥';
+        }
+
+        #info {
+            background: #f5f3ef;
+            padding: 10px;
+            margin: 20px 0;
+        }
+
+        div.number {
+            padding: 10px;
+        }
+
+        i.number-text {
+            margin-right: 10px;
+            font-style: normal;
+        }
+
+        div.action {
+            margin-top: 20px;
+            padding-left: 10px;
+        }
+
+        .action button {
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
@@ -88,15 +136,30 @@
         <section class="col-md-6">
             <article>
                 <p class="title">${p.title}</p>
-                <p class="desc">${p.desc}</p>
-                <p class="price"><span class="price">￥${p.price}</span><span class="price">￥${p.originalPrice}</span>
-                </p>
-                <p class="number">数量 <span id="sub">-</span><input id="num" value="1" pattern="\d{1,2}"><span
-                        id="add">+</span></p>
-                <p class="btn">
-                    <button class="btn btn-danger">立即购买</button>
-                    <button class="btn btn-info"><span class="glyphicon glyphicon-shopping-cart"></span> 加入购物车</button>
-                </p>
+                <p class="desc text-warning">${p.desc}</p>
+                <div id="info">
+                    <p class="price">
+                        活动价 <span class="price">${p.price}</span>
+                        <span class="originPrice">${p.originalPrice}</span>
+                    </p>
+                    <p>限制 特价商品不可与优惠券叠加使用</p>
+                    <p class="service">服务</p>
+                    <ul>
+                        <li>支持30天无忧退换货</li>
+                        <li>48小时快速退款</li>
+                        <li>满88元免邮费</li>
+                        <li>网易自营品牌</li>
+                        <li>国内部分地区无法配送</li>
+                    </ul>
+                </div>
+                <div class="number">
+                    <i class="number-text">数量</i>
+                    <span id="sub">-</span><input id="num" value="1" pattern="\d{1,2}"><span id="add">+</span>
+                </div>
+                <div class="action">
+                    <button class="btn btn-danger btn-lg">立即购买</button>
+                    <button class="btn btn-warning btn-lg"><span class="glyphicon glyphicon-shopping-cart"></span> 加入购物车</button>
+                </div>
             </article>
         </section>
     </div>
