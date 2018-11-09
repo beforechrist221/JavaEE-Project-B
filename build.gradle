@@ -30,4 +30,5 @@ dependencies {
     compile 'org.projectlombok:lombok:1.18.2'
     compile 'org.freemarker:freemarker:2.3.28'
     compile 'org.jsoup:jsoup:1.11.3'
+    compile 'commons-codec:commons-codec:1.11'
 }

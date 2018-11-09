@@ -13,4 +13,10 @@
             updateIp   = #{updateIp}
         where id = #{id}
     </update>
+    <update id="updateToken" parameterType="userInfo">
+        update db_b.user_info
+        set token     = md5(#{token}),
+            tokenTime = #{tokenTime}
+        where userId = #{userId}
+    </update>
 </mapper>

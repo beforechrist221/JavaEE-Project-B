@@ -1,12 +1,20 @@
 package project.demo.controller;
 
+import org.apache.commons.codec.digest.DigestUtils;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import project.demo.model.Mail;
 import project.demo.model.User;
+import project.demo.model.UserInfo;
+import project.demo.service.MailService;
+import project.demo.service.UserInfoService;
 import project.demo.service.UserService;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,10 +23,22 @@ import java.util.Map;
 public class UserController extends BaseController {
 
     private UserService userService;
+    private UserInfoService userInfoService;
+    private MailService mailService;
 
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
+    }
+
+    @Autowired
+    public void setUserInfoService(UserInfoService userInfoService) {
+        this.userInfoService = userInfoService;
+    }
+
+    @Autowired
+    public void setMailService(MailService mailService) {
+        this.mailService = mailService;
     }
 
     @RequestMapping("checkEmail")
@@ -30,6 +50,41 @@ public class UserController extends BaseController {
             data.put("isEmailExisted", true);
         }
         return data;
+    }
+
+    @RequestMapping("checkEmailForRestPassword")
+    private String checkEmailForRestPassword(@RequestParam String email) {
+        User user = userService.queryUserByEmail(email);
+        if (user != null) {
+            StrongPasswordEncryptor strongPasswordEncryptor = new StrongPasswordEncryptor();
+            String token = strongPasswordEncryptor.encryptPassword(email);
+            long tokenTime = new Date().getTime();
+
+            UserInfo userInfo = new UserInfo();
+            userInfo.setToken(token);
+            userInfo.setTokenTime(tokenTime);
+            userInfo.setUserId(user.getId()); // user id
+
+            userInfoService.modify("updateToken", userInfo);
+
+            token = DigestUtils.md5Hex(token);
+            System.out.println(token);
+
+            String link = "http://localhost:8080/resetPassword/" + user.getId() + "/" + token;
+
+            Mail mail = new Mail();
+            mail.setFromAddress("hunjitianya@qq.com");
+            mail.setToEmails(email);
+            mail.setSubject("重置密码");
+            mail.setContent(link);
+
+            mailService.sendAttachMail(mail);
+
+            session.setAttribute("message", "邮件已经发送至您的邮箱");
+            return "redirect:/email.jsp";
+        }
+        request.setAttribute("errorMessage", "邮箱不存在");
+        return "/email.jsp";
     }
 
     @RequestMapping("signUp")

@@ -26,7 +26,7 @@
                 <input id="password" type="password" name="password" class="form-control" value="123">
             </div>
             <button type="submit" class="btn btn-primary btn-block">Sign in</button>
-            <p class="text-right"><a class="text-warning" href="${ctx}/reset-password.jsp">忘记密码？</a></p>
+            <p class="text-right"><a class="text-warning" href="${ctx}/email.jsp">忘记密码？</a></p>
         </form>
         ${requestScope.message}
     </section>

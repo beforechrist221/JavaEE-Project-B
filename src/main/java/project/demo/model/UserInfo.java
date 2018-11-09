@@ -17,6 +17,8 @@ public class UserInfo implements Serializable {
     private String createTime;
     private String updateTime;
     private String updateIp;
+    private String token;
+    private long tokenTime;
     private int userId;
 
     public UserInfo(String createTime, int userId) {

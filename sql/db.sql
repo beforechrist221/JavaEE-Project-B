@@ -25,7 +25,9 @@ create table db_b.user_info (
   createTime datetime comment 'sign up time',
   updateTime datetime comment 'last sign in time',
   updateIp   varchar(255) comment 'last sign in IP address',
-  userId     int comment 'user id FK'
+  token      varchar(255) comment 'reset password token',
+  tokenTime  bigint comment 'token time',
+  userId int comment 'user id FK'
 )
   comment 'user info table';
 
@@ -86,7 +88,7 @@ create table db_b.address (
   comment 'province NN',
   city     varchar(255)
   comment 'city',
-  area varchar(255) not null
+  area     varchar(255) not null
   comment 'area NN',
   town     varchar(255) not null
   comment 'town NN',
@@ -171,7 +173,7 @@ limit 3 offset 9;
 select *
 from db_b.address;
 
-set foreign_key_checks  = 1;
+set foreign_key_checks = 1;
 
 truncate table db_b.user;
 

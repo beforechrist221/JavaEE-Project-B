@@ -9,7 +9,7 @@
     <bean id="javaMailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="smtp.qq.com"/>
         <property name="username" value="hunjitianya@qq.com"/>
-        <property name="password" value=""/>
+        <property name="password" value="zvgfwbroqofobhae"/>
         <property name="javaMailProperties">
             <props>
                 <prop key="mail.smtp.auth">true</prop>
