@@ -251,14 +251,17 @@
         $('#add-cart').on('click', function () {
             var productId = $('#product').attr('title');
             var number = $('#num').val();
-            // console.log((productId + ',' + number));
             $.ajax({
                 url: '${ctx}/cart/create',
                 type: 'post',
                 data: {'productId': productId, 'number': number},
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data);
+                    if (data.result) {
+                        var cartNumber = $('#cart-number');
+                        var currentCartNumber = cartNumber.text();
+                        cartNumber.text(parseInt(currentCartNumber) + parseInt(number));
+                    }
                 }
             });
         });

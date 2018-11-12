@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="../commons/inc.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -7,8 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>index page</title>
     <style>
-        @import "../assets/bootstrap/css/bootstrap.css";
-        @import "../assets/styles/global.css";
+        @import "${ctx}/assets/bootstrap/css/bootstrap.css";
+        @import "${ctx}/assets/styles/global.css";
 
         article {
             background: #ddd;
@@ -17,10 +18,6 @@
 
         .avatar {
             height: 20px;
-        }
-
-        #avatar {
-            height: 100px;
         }
 
     </style>
@@ -34,8 +31,8 @@
     <h3>${sessionScope.user.email}</h3>
 </main>
 <footer class="jumbotron"></footer>
-<script src="../assets/scripts/jquery.min.js"></script>
-<script src="../assets/bootstrap/js/bootstrap.js"></script>
-<script src="../assets/scripts/global.js"></script>
+<script src="${ctx}/assets/scripts/jquery.min.js"></script>
+<script src="${ctx}/assets/bootstrap/js/bootstrap.js"></script>
+<script src="${ctx}/assets/scripts/global.js"></script>
 </body>
 </html>

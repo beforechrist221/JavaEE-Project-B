@@ -109,4 +109,9 @@ public abstract class GenericDaoImpl<T extends Serializable, ID extends Number> 
 
         return new Pagination<>(list, sqlId, pageSize, totalRows,totalPages, currentPage);
     }
+
+    @Override
+    public Object query(String sqlId, Object parameter) {
+        return sqlSession.selectOne(getStatement(sqlId), parameter);
+    }
 }

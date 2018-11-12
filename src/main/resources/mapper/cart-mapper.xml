@@ -42,4 +42,10 @@
         FROM db_b.cart
         WHERE cart.id = #{id}
     </select>
+    <select id="queryCartNumber" parameterType="int" resultType="java.lang.Integer">
+        select sum(number)
+        from db_b.cart
+        where userId = #{userId}
+        group by userId
+    </select>
 </mapper>

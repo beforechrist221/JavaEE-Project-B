@@ -56,7 +56,7 @@
                 <li>
                     <a href="#">
                         <span class="glyphicon glyphicon-shopping-cart"></span>
-                        <span class="badge">0</span>
+                        <span id="cart-number" class="badge">${sessionScope.cartNumber}</span>
                     </a>
                 </li>
                 <li><a class="pop" href="#" data-toggle="popover" data-container="body" data-trigger="hover"

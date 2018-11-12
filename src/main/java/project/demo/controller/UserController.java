@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import project.demo.model.Mail;
 import project.demo.model.User;
 import project.demo.model.UserInfo;
+import project.demo.service.CartService;
 import project.demo.service.MailService;
 import project.demo.service.UserInfoService;
 import project.demo.service.UserService;
@@ -26,6 +27,7 @@ public class UserController extends BaseController {
     private UserService userService;
     private UserInfoService userInfoService;
     private MailService mailService;
+    private CartService cartService;
 
     @Autowired
     public void setUserService(UserService userService) {
@@ -40,6 +42,11 @@ public class UserController extends BaseController {
     @Autowired
     public void setMailService(MailService mailService) {
         this.mailService = mailService;
+    }
+
+    @Autowired
+    public void setCartService(CartService cartService) {
+        this.cartService = cartService;
     }
 
     @RequestMapping("checkEmail")
@@ -128,6 +135,8 @@ public class UserController extends BaseController {
         user = userService.signIn(user);
         if (user != null) {
             session.setAttribute("user", user);
+            int cartNumber = (int) cartService.query("queryCartNumber", user.getId());
+            session.setAttribute("cartNumber", cartNumber);
             return "redirect:/portal/home.jsp";
         }
         request.setAttribute("message", "Invalid Email or password.");

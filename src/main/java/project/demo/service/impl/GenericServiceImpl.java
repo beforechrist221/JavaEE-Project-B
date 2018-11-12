@@ -67,4 +67,9 @@ public abstract class GenericServiceImpl<T extends Serializable, ID extends Numb
     public Pagination<T> query(String sqlId, Object parameter, int currentPage) {
         return genericDao.query(sqlId, parameter, currentPage);
     }
+
+    @Override
+    public Object query(String sqlId, Object parameter) {
+        return genericDao.query(sqlId, parameter);
+    }
 }

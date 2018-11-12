@@ -28,4 +28,6 @@ public interface GenericService<T extends Serializable, ID extends Number> {
     Pagination<T> queryAll(int currentPage);
 
     Pagination<T> query(String sqlId, Object parameter, int currentPage);
+
+    Object query(String sqlId, Object parameter);
 }
