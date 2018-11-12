@@ -10,7 +10,7 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ${model} implement Serializable {
+public class ${model} implements Serializable {
     private ${PK} id;
     <#list properties?keys as key>
     private ${properties[key]} ${key};

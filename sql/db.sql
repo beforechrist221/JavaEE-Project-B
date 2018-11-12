@@ -27,7 +27,7 @@ create table db_b.user_info (
   updateIp   varchar(255) comment 'last sign in IP address',
   token      varchar(255) comment 'reset password token',
   tokenTime  bigint comment 'token time',
-  userId int comment 'user id FK'
+  userId     int comment 'user id FK'
 )
   comment 'user info table';
 
@@ -104,6 +104,22 @@ create table db_b.address (
 )
   comment 'address table';
 
+-- cart table
+drop table if exists db_b.cart;
+create table db_b.cart (
+  id         int auto_increment primary key
+  comment 'id PK',
+  productId  int      not null
+  comment 'product id NN FK',
+  number     int      not null
+  comment 'product number NN',
+  createTime datetime not null
+  comment 'create time NN',
+  updateTime datetime comment 'update time',
+  userId     int comment 'user id FK'
+)
+  comment 'cart table';
+
 alter table db_b.user_info
   add constraint
   user_info_fk_userId
@@ -119,6 +135,18 @@ references db_b.category (id);
 alter table db_b.address
   add constraint
   address_fk_userId
+foreign key (userId)
+references db_b.user (id);
+
+alter table db_b.cart
+  add constraint
+  cart_fk_productId
+foreign key (productId)
+references db_b.product (id);
+
+alter table db_b.cart
+  add constraint
+  cart_fk_userId
 foreign key (userId)
 references db_b.user (id);
 
