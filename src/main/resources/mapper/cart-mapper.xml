@@ -5,37 +5,38 @@
 
 <mapper namespace="cart">
     <insert id="create" parameterType="cart" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO db_b.cart (
-            productId, 
-            number, 
-            createTime, 
-            userId
-        )
-        VALUES (
-            #{productId}, 
-            #{number}, 
-            now(),
-            #{userId}
-        )
+        INSERT INTO db_b.cart (productId, number, createTime, userId)
+        VALUES (#{productId}, #{number}, now(), #{userId})
     </insert>
     <delete id="remove">
-        DELETE FROM db_b.cart
+        DELETE
+        FROM db_b.cart
         WHERE cart.id = #{id}
     </delete>
     <update id="modify">
         UPDATE db_b.cart
-        SET
-            productId = #{productId}, 
-            number = #{number}, 
-            createTime = #{createTime}, 
-            updateTime = #{updateTime}, 
-            userId = #{userId}
+        SET productId  = #{productId},
+            number     = #{number},
+            createTime = #{createTime},
+            updateTime = #{updateTime},
+            userId     = #{userId}
         WHERE cart.id = #{id}
     </update>
-    <select id="queryAll" resultType="cart">
-        SELECT *
-        FROM db_b.cart
-        ORDER BY id
+    <resultMap id="queryAll_map" type="product">
+        <id property="id" column="id"/>
+        <result property="coverPicture" column="coverPicture"/>
+        <result property="title" column="title"/>
+        <result property="price" column="price"/>
+        <collection property="carts" ofType="cart">
+            <result property="number" column="number"/>
+        </collection>
+    </resultMap>
+    <select id="queryAll" parameterType="int" resultMap="queryAll_map">
+        SELECT p.id, p.coverPicture, p.title, p.price, c.number
+        FROM db_b.cart c
+                 inner join db_b.product p on c.productId = p.id
+                 inner join db_b.user u on c.userId = u.id
+        where u.id = #{id}
     </select>
     <select id="queryById" resultType="cart">
         SELECT *

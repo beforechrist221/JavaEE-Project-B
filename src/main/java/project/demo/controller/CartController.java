@@ -47,8 +47,9 @@ public class CartController extends BaseController {
 
     @RequestMapping("queryAll")
     private String queryAll() {
-        session.setAttribute("list", cartService.queryAll());
-        return "redirect:/cart/list.jsp";
+        User user = (User) session.getAttribute("user");
+        session.setAttribute("list", cartService.queryList("queryAll", user.getId()));
+        return "redirect:/cart.jsp";
     }
 
     @RequestMapping("queryById/{id}")

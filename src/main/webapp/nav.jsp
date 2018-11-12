@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ include file="commons/inc.jsp"%>
 <style>
     .badge {
         position: absolute;
@@ -54,7 +54,7 @@
             </c:if>
             <c:if test="${sessionScope.user ne null}">
                 <li>
-                    <a href="#">
+                    <a href="${ctx}/cart/queryAll">
                         <span class="glyphicon glyphicon-shopping-cart"></span>
                         <span id="cart-number" class="badge">${sessionScope.cartNumber}</span>
                     </a>

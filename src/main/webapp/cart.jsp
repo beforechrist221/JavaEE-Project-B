@@ -15,7 +15,8 @@
 <nav id="nav" class="navbar navbar-inverse"></nav>
 <header class="jumbotron"></header>
 <main class="container">
-    <h1>detail</h1>
+    <h1>购物车</h1>
+    ${sessionScope.list}
 </main>
 <footer class="jumbotron"></footer>
 <script src="${ctx}/assets/scripts/jquery.min.js"></script>

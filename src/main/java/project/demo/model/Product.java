@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.EqualsAndHashCode;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -25,4 +26,6 @@ public class Product implements Serializable {
     private String createTime;
     private String updateTime;
     private Integer categoryId;
+
+    private List<Cart> carts;
 }
