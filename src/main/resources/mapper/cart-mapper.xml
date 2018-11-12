@@ -9,14 +9,12 @@
             productId, 
             number, 
             createTime, 
-            updateTime, 
             userId
         )
         VALUES (
             #{productId}, 
             #{number}, 
-            #{createTime}, 
-            #{updateTime}, 
+            now(),
             #{userId}
         )
     </insert>

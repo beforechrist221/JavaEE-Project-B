@@ -5,7 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import project.demo.model.Cart;
+import project.demo.model.User;
 import project.demo.service.CartService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("cart")
@@ -19,9 +23,14 @@ public class CartController extends BaseController {
     }
 
     @RequestMapping("create")
-    private String create(Cart cart) {
+    @ResponseBody
+    private Map<String, Boolean> create(Cart cart) {
+        User user = (User) session.getAttribute("user");
+        cart.setUserId(user.getId());
         cartService.create(cart);
-        return "redirect:/cart/queryAll";
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("result", true);
+        return map;
     }
 
     @RequestMapping("remove/{id}")

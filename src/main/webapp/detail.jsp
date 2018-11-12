@@ -134,7 +134,7 @@
             </article>
         </section>
         <section class="col-md-6">
-            <article>
+            <article id="product" title="${p.id}">
                 <p class="title">${p.title}</p>
                 <p class="desc text-warning">${p.desc}</p>
                 <div id="info">
@@ -154,11 +154,14 @@
                 </div>
                 <div class="number">
                     <i class="number-text">数量</i>
-                    <span id="sub">-</span><input id="num" value="1" pattern="\d{1,2}"><span id="add">+</span>
+                    <span id="sub">-</span><input id="num" name="number" value="1" pattern="\d{1,2}"><span
+                        id="add">+</span>
                 </div>
                 <div class="action">
                     <button class="btn btn-danger btn-lg">立即购买</button>
-                    <button class="btn btn-warning btn-lg"><span class="glyphicon glyphicon-shopping-cart"></span> 加入购物车</button>
+                    <button id="add-cart" class="btn btn-warning btn-lg"><span
+                            class="glyphicon glyphicon-shopping-cart"></span> 加入购物车
+                    </button>
                 </div>
             </article>
         </section>
@@ -243,6 +246,21 @@
         $.each($.parseJSON(detailPictures), function (index, item) {
             var img = '<img src="pictures/detail/' + item + '"/>';
             detail.append(img);
+        });
+
+        $('#add-cart').on('click', function () {
+            var productId = $('#product').attr('title');
+            var number = $('#num').val();
+            // console.log((productId + ',' + number));
+            $.ajax({
+                url: '${ctx}/cart/create',
+                type: 'post',
+                data: {'productId': productId, 'number': number},
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                }
+            });
         });
     });
 </script>

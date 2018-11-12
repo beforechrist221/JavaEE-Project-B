@@ -206,3 +206,11 @@ set foreign_key_checks = 1;
 truncate table db_b.user;
 
 truncate table db_b.user_info;
+
+select *
+from db_b.cart;
+
+select sum(number)
+from db_b.cart
+where userId = 1
+group by userId;
