@@ -80,7 +80,7 @@
 
         <table class="table table-striped">
             <tr>
-                <td width="10%"><input type="checkbox" class="all"> 全选</td>
+                <td width="10%"><input type="checkbox" class="all" checked="checked"> 全选</td>
                 <th class="text-center" width="35%" colspan="2">商品信息</th>
                 <th class="text-center" width="15%">单价</th>
                 <th class="text-center" width="10%">数量</th>
@@ -98,7 +98,7 @@
                         <c:set var="cartNumber" value="${cartNumber + cart.number}"/>
                     </c:forEach>
                     <td width="10%">
-                        <input type="checkbox" name="product"
+                        <input type="checkbox" name="product" checked="checked"
                                data-number="${cartNumber}"
                                data-price="${product.price}"
                                data-originalPrice="${product.originalPrice}">
@@ -121,7 +121,7 @@
         </table>
         <table id="table-bottom" class="table table-striped">
             <tr>
-                <th width="10%"><input type="checkbox" class="all" style="text-align: left;"> 已选<span
+                <th width="10%"><input type="checkbox" class="all" style="text-align: left;" checked="checked"> 已选<span
                         id="selected-number"></span></th>
                 <th width="15%"><a class="text-warning" href="">批量删除</a></th>
                 <th width="35%" style="line-height: 30px;">
@@ -155,6 +155,7 @@
             }
             $('#selected-number').text('（' + getNumber() + '）');
             $('#total-price').text(getTotalPrice());
+            <%--$('#total-price').html('<fmt:formatNumber value="'++'" type="currency"/>');--%>
             $('#total-discount').text(getTotalDiscount());
             $('#pay').text(getTotalPrice() - getTotalDiscount());
         });
@@ -166,6 +167,7 @@
                 $(this).prop('checked', false);
             }
             $('#selected-number').text('（' + getNumber() + '）');
+            $('#total-price').text(getTotalPrice());
             $('#total-discount').text(getTotalDiscount());
             $('#pay').text(getTotalPrice() - getTotalDiscount());
         });
