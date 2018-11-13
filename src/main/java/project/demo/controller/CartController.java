@@ -57,4 +57,14 @@ public class CartController extends BaseController {
         session.setAttribute("cart", cartService.queryById(id));
         return "redirect:/cart/edit.jsp";
     }
+
+    @RequestMapping("queryCartNumber")
+    @ResponseBody
+    private Map<String, Integer> queryCartNumber() {
+        User user = (User) session.getAttribute("user");
+        int cartNumber = (int) cartService.query("queryCartNumber", user.getId());
+        Map<String, Integer> map = new HashMap<>();
+        map.put("cartNumber", cartNumber);
+        return map;
+    }
 }

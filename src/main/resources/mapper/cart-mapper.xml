@@ -28,11 +28,12 @@
         <result property="title" column="title"/>
         <result property="price" column="price"/>
         <collection property="carts" ofType="cart">
+            <id property="id" column="cartId"/>
             <result property="number" column="number"/>
         </collection>
     </resultMap>
     <select id="queryAll" parameterType="int" resultMap="queryAll_map">
-        SELECT p.id, p.coverPicture, p.title, p.price, c.number
+        SELECT p.id, p.coverPicture, p.title, p.price, c.id as cartId, c.number
         FROM db_b.cart c
                  inner join db_b.product p on c.productId = p.id
                  inner join db_b.user u on c.userId = u.id

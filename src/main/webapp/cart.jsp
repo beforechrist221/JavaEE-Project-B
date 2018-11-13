@@ -16,7 +16,22 @@
 <header class="jumbotron"></header>
 <main class="container">
     <h1>购物车</h1>
-    ${sessionScope.list}
+    <table class="table table-bordered table-striped table-hover">
+        <tr>
+            <th>picture</th>
+            <th>title</th>
+            <th>price</th>
+            <th>number</th>
+        </tr>
+        <c:forEach var="product" items="${sessionScope.list}">
+            <tr>
+                <td>${product.coverPicture}</td>
+                <td>${product.title}</td>
+                <td>${product.price}</td>
+                <%--<td>${product.carts[0].number}</td>--%>
+            </tr>
+        </c:forEach>
+    </table>
 </main>
 <footer class="jumbotron"></footer>
 <script src="${ctx}/assets/scripts/jquery.min.js"></script>

@@ -86,5 +86,14 @@
                 }
             }, 300);
         });
+
+        $.ajax({
+            url: '${ctx}/cart/queryCartNumber',
+            type: 'post',
+            dataType: 'json',
+            success: function (data) {
+                $('#cart-number').text(data.cartNumber);
+            }
+        });
     });
 </script>
