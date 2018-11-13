@@ -22,6 +22,47 @@
         table {
             border: 1px solid #ddd;
         }
+
+        #table-bottom {
+            height: 60px;
+        }
+
+        #table-bottom th {
+            line-height: 60px;
+            text-align: center;
+        }
+
+        #order {
+            color: #fff;
+            background: #b4a078;
+            cursor: pointer;
+        }
+
+        #order:hover {
+            opacity: .8;
+        }
+
+        table#table-data > tbody > tr.bg-warning > td {
+            line-height: 80px;
+        }
+
+        #table-data {
+            border: none;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+
+        #table-data tr.tr-data td {
+            border-bottom: 1px solid #ddd;
+        }
+
+        #table-data tr.tr-data td:first-of-type {
+            border-left: 1px solid #ddd;
+        }
+
+        #table-data tr.tr-data td:last-of-type {
+            border-right: 1px solid #ddd;
+        }
     </style>
 </head>
 <body>
@@ -31,40 +72,48 @@
     <h1>购物车</h1>
     <section class="col-md-12">
 
-        <table class="table bg-warning">
+        <table class="table table-striped">
             <tr>
                 <td width="10%"><input type="checkbox" name="" id=""> 全选</td>
-                <th width="35%" colspan="2">商品信息</th>
-                <th width="15%">单价</th>
-                <th width="15%">数量</th>
-                <th width="15%">小计</th>
-                <th width="5%">操作</th>
+                <th class="text-center" width="35%" colspan="2">商品信息</th>
+                <th class="text-center" width="15%">单价</th>
+                <th class="text-center" width="10%">数量</th>
+                <th class="text-center" width="10%">小计</th>
+                <th class="text-center" width="15%">操作</th>
             </tr>
         </table>
-        <table class="table">
+        <table id="table-data" class="table">
+            <c:set var="totalPrice" value="0"/>
+            <c:set var="totalDiscount" value="0"/>
             <c:forEach var="product" items="${sessionScope.list}">
-                <tr>
-                    <td width="5%"><input type="checkbox" name=""></td>
+                <tr class="bg-warning tr-data">
+                    <td width="10%"><input type="checkbox" name=""></td>
                     <td width="15%" class="picture" title='${product.coverPicture}'></td>
-                    <td width="20%">${product.title}</td>
-                    <td width="15%">${product.price}</td>
+                    <td class="text-center" width="20%">${product.title}</td>
+                    <td class="text-center" width="15%">
+                        <span>${product.price}</span><span>${product.originalPrice}</span></td>
                     <c:set var="cartNumber" value="0"/>
                     <c:forEach var="cart" items="${product.carts}">
                         <c:set var="cartNumber" value="${cartNumber + cart.number}"/>
                     </c:forEach>
-                    <td width="15%">${cartNumber}</td>
-                    <td width="15%">${product.price * cartNumber}</td>
-                    <td width="5%"><a href="">删除</a></td>
+                    <td class="text-center" width="10%">${cartNumber}</td>
+                    <td class="text-center" width="10%">${product.price * cartNumber}</td>
+                    <td class="text-center" width="15%"><a class="text-warning" href="">删除</a></td>
                 </tr>
+                <c:set var="totalPrice" value="${totalPrice + product.originalPrice * cartNumber}"/>
+                <c:set var="totalDiscount" value="${totalDiscount + (product.originalPrice - product.price) * cartNumber}"/>
             </c:forEach>
         </table>
-        <table class="table bg-warning">
+        <table id="table-bottom" class="table table-striped">
             <tr>
-                <td width="10%"><input type="checkbox" name=""> 已选（<span></span>）</td>
-                <th width="35%"><a href="">批量删除</a></th>
-                <th width="15%">商品合计：<span></span></th>
-                <th width="30%" colspan="2">应付总额：<span>￥ 1234</span></th>
-                <th width="5%"><a href="">下单</a></th>
+                <th width="10%"><input type="checkbox" name="" style="text-align: left;"> 已选（<span></span>）</th>
+                <th width="15%"><a class="text-warning" href="">批量删除</a></th>
+                <th width="35%" style="line-height: 30px;">
+                    <p>商品合计：<span>${totalPrice}</span></p>
+                    <p>活动优惠：<span>-${totalDiscount}</span></p>
+                </th>
+                <th width="20%" colspan="2">应付总额：<span>${totalPrice - totalDiscount}</span></th>
+                <th id="order" width="15%">下单</th>
             </tr>
         </table>
     </section>
