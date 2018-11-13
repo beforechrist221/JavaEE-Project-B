@@ -12,6 +12,8 @@
 
         td img {
             height: 80px;
+            background: #f4f4f4;
+            border: 1px solid #eaeaea;
         }
 
         table td,
@@ -24,12 +26,16 @@
         }
 
         #table-bottom {
-            height: 60px;
+            height: 80px;
         }
 
         #table-bottom th {
-            line-height: 60px;
+            line-height: 80px;
             text-align: center;
+        }
+
+        #table-bottom th:first-of-type {
+            text-align: left;
         }
 
         #order {
@@ -74,7 +80,7 @@
 
         <table class="table table-striped">
             <tr>
-                <td width="10%"><input type="checkbox" name="" id=""> 全选</td>
+                <td width="10%"><input type="checkbox" class="all"> 全选</td>
                 <th class="text-center" width="35%" colspan="2">商品信息</th>
                 <th class="text-center" width="15%">单价</th>
                 <th class="text-center" width="10%">数量</th>
@@ -87,32 +93,44 @@
             <c:set var="totalDiscount" value="0"/>
             <c:forEach var="product" items="${sessionScope.list}">
                 <tr class="bg-warning tr-data">
-                    <td width="10%"><input type="checkbox" name=""></td>
-                    <td width="15%" class="picture" title='${product.coverPicture}'></td>
-                    <td class="text-center" width="20%">${product.title}</td>
-                    <td class="text-center" width="15%">
-                        <span>${product.price}</span><span>${product.originalPrice}</span></td>
                     <c:set var="cartNumber" value="0"/>
                     <c:forEach var="cart" items="${product.carts}">
                         <c:set var="cartNumber" value="${cartNumber + cart.number}"/>
                     </c:forEach>
+                    <td width="10%">
+                        <input type="checkbox" name="product"
+                               data-number="${cartNumber}"
+                               data-price="${product.price}"
+                               data-originalPrice="${product.originalPrice}">
+                    </td>
+                    <td width="15%" class="picture" title='${product.coverPicture}'></td>
+                    <td class="text-center" width="20%">${product.title}</td>
+                    <td class="text-center" width="15%">
+                        <span><fmt:formatNumber value="${product.price}" type="currency"/></span>
+                        <span><fmt:formatNumber value="${product.originalPrice}" type="currency"/></span>
+                    </td>
                     <td class="text-center" width="10%">${cartNumber}</td>
-                    <td class="text-center" width="10%">${product.price * cartNumber}</td>
+                    <td class="text-center" width="10%"><fmt:formatNumber value="${product.price * cartNumber}"
+                                                                          type="currency"/></td>
                     <td class="text-center" width="15%"><a class="text-warning" href="">删除</a></td>
                 </tr>
                 <c:set var="totalPrice" value="${totalPrice + product.originalPrice * cartNumber}"/>
-                <c:set var="totalDiscount" value="${totalDiscount + (product.originalPrice - product.price) * cartNumber}"/>
+                <c:set var="totalDiscount"
+                       value="${totalDiscount + (product.originalPrice - product.price) * cartNumber}"/>
             </c:forEach>
         </table>
         <table id="table-bottom" class="table table-striped">
             <tr>
-                <th width="10%"><input type="checkbox" name="" style="text-align: left;"> 已选（<span></span>）</th>
+                <th width="10%"><input type="checkbox" class="all" style="text-align: left;"> 已选<span
+                        id="selected-number"></span></th>
                 <th width="15%"><a class="text-warning" href="">批量删除</a></th>
                 <th width="35%" style="line-height: 30px;">
-                    <p>商品合计：<span>${totalPrice}</span></p>
-                    <p>活动优惠：<span>-${totalDiscount}</span></p>
+                    <p>商品合计：<span id="total-price"><fmt:formatNumber value="${totalPrice}" type="currency"/></span></p>
+                    <p>活动优惠：<span id="total-discount">-<fmt:formatNumber value="${totalDiscount}"
+                                                                         type="currency"/></span></p>
                 </th>
-                <th width="20%" colspan="2">应付总额：<span>${totalPrice - totalDiscount}</span></th>
+                <th width="20%" colspan="2">应付总额：<span id="pay"><fmt:formatNumber value="${totalPrice - totalDiscount}"
+                                                                                  type="currency"/></span></th>
                 <th id="order" width="15%">下单</th>
             </tr>
         </table>
@@ -128,6 +146,60 @@
             var picture = $.parseJSON($(this).attr('title'))[0];
             $(this).append('<img src="${ctx}/pictures/cover/' + picture + '"/>')
         });
+
+        $('.all').on('click', function () {
+            if ($(this).prop('checked')) {
+                $('input:checkbox').prop('checked', true);
+            } else {
+                $('input:checkbox').prop('checked', false);
+            }
+            $('#selected-number').text('（' + getNumber() + '）');
+            $('#total-price').text(getTotalPrice());
+            $('#total-discount').text(getTotalDiscount());
+            $('#pay').text(getTotalPrice() - getTotalDiscount());
+        });
+
+        $('input:checkbox[name=product]').on('click', function () {
+            if ($(this).prop('checked')) {
+                $(this).prop('checked', true);
+            } else {
+                $(this).prop('checked', false);
+            }
+            $('#selected-number').text('（' + getNumber() + '）');
+            $('#total-discount').text(getTotalDiscount());
+            $('#pay').text(getTotalPrice() - getTotalDiscount());
+        });
+
+
+        function getNumber() {
+            var number = 0;
+            $.each($('input:checkbox[name=product]'), function (index, item) {
+                if ($(this).prop('checked')) {
+                    number += parseInt($(this).attr('data-number'));
+                }
+            });
+            return number;
+        }
+
+        function getTotalPrice() {
+            var totalPrice = 0;
+            $.each($('input:checkbox[name=product]'), function (index, item) {
+                if ($(this).prop('checked')) {
+                    totalPrice += parseInt($(this).attr('data-originalPrice')) * parseInt($(this).attr('data-number'));
+                }
+            });
+            return totalPrice;
+        }
+
+        function getTotalDiscount() {
+            var totalDiscount = 0;
+            $.each($('input:checkbox[name=product]'), function (index, item) {
+                if ($(this).prop('checked')) {
+                    totalDiscount += (parseInt($(this).attr('data-originalPrice')) - parseInt($(this).attr('data-price'))) * parseInt($(this).attr('data-number'));
+                }
+            });
+            return totalDiscount;
+        }
     });
 </script>
 </body>
