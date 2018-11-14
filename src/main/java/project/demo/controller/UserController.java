@@ -135,8 +135,12 @@ public class UserController extends BaseController {
         user = userService.signIn(user);
         if (user != null) {
             session.setAttribute("user", user);
-            int cartNumber = (int) cartService.query("queryCartNumber", user.getId());
-            session.setAttribute("cartNumber", cartNumber);
+            Integer cartNumber = (Integer) cartService.query("queryCartNumber", user.getId());
+            if (cartNumber == null) {
+                session.setAttribute("cartNumber", 0);
+            } else {
+                session.setAttribute("cartNumber", cartNumber);
+            }
             return "redirect:/index.jsp";
         }
         request.setAttribute("message", "Invalid Email or password.");

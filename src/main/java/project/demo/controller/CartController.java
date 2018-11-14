@@ -23,12 +23,28 @@ public class CartController extends BaseController {
         this.cartService = cartService;
     }
 
+    /**
+     * 加入购物车：
+     * 1. 先判断当前购物车里是否含有这个商品 (productId userId)
+     * 2. 如果不含有这个商品，插入一条记录
+     * 3. 如果已经含有这个商品，修改 number 的值
+     *
+     * @param cart
+     * @return
+     */
     @RequestMapping("create")
     @ResponseBody
     private Map<String, Boolean> create(Cart cart) {
         User user = (User) session.getAttribute("user");
         cart.setUserId(user.getId());
-        cartService.create(cart);
+
+        Integer cartId = (Integer) cartService.query("queryCartId", cart);
+        if (cartId == null) {
+            cartService.create(cart);
+        } else {
+            cartService.modify("modifyNumber", cart);
+        }
+
         Map<String, Boolean> map = new HashMap<>();
         map.put("result", true);
         return map;

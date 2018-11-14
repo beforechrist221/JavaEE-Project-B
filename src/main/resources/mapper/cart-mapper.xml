@@ -51,4 +51,16 @@
         where userId = #{userId}
         group by userId
     </select>
+    <select id="queryCartId" parameterType="cart" resultType="java.lang.Integer">
+        select id
+        from db_b.cart
+        where productId = #{productId}
+          and userId = #{userId}
+    </select>
+    <update id="modifyNumber" parameterType="cart">
+        update db_b.cart
+        set number = number + #{number}
+        where productId = #{productId}
+          and userId = #{userId}
+    </update>
 </mapper>
