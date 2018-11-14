@@ -28,10 +28,10 @@
         <result property="title" column="title"/>
         <result property="price" column="price"/>
         <result property="originalPrice" column="originalPrice"/>
-        <collection property="carts" ofType="cart">
+        <association property="cart" javaType="cart">
             <id property="id" column="cartId"/>
             <result property="number" column="number"/>
-        </collection>
+        </association>
     </resultMap>
     <select id="queryAll" parameterType="int" resultMap="queryAll_map">
         SELECT p.id, p.coverPicture, p.title, p.price, p.originalPrice, c.id as cartId, c.number

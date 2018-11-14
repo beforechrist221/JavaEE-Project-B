@@ -97,4 +97,18 @@ public class CartController extends BaseController {
         map.put("cartNumber", cartNumber);
         return map;
     }
+
+    @RequestMapping("modifyNumber")
+    @ResponseBody
+    private Map<String, Boolean> modifyNumber(@RequestParam int productId, @RequestParam int number) {
+        User user = (User) session.getAttribute("user");
+        Cart cart = new Cart();
+        cart.setUserId(user.getId());
+        cart.setProductId(productId);
+        cart.setNumber(number);
+        cartService.modify("modifyNumber", cart);
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("result", true);
+        return map;
+    }
 }

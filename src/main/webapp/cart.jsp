@@ -146,13 +146,9 @@
                 <c:set var="totalDiscount" value="0"/>
                 <c:forEach var="product" items="${sessionScope.list}">
                     <tr class="bg-warning tr-data">
-                        <c:set var="cartNumber" value="0"/>
-                        <c:forEach var="cart" items="${product.carts}">
-                            <c:set var="cartNumber" value="${cartNumber + cart.number}"/>
-                        </c:forEach>
                         <td width="10%">
                             <input type="checkbox" name="productIds" value="${product.id}" checked="checked"
-                                   data-number="${cartNumber}"
+                                   data-number="${product.cart.number}"
                                    data-price="${product.price}"
                                    data-originalPrice="${product.originalPrice}">
                         </td>
@@ -164,19 +160,19 @@
                         </td>
                         <td class="text-center number" width="10%" data-price="${product.price}"
                             data-product-id="${product.id}">
-                            <span class="sub">-</span><input class="num" name="number" value="${cartNumber}"><span
+                            <span class="sub">-</span><input class="num" name="number" value="${product.cart.number}"><span
                                 class="add">+</span>
                         </td>
                         <td class="product-total-price" class="text-center" width="10%"><fmt:formatNumber
-                                value="${product.price * cartNumber}"
+                                value="${product.price * product.cart.number}"
                                 type="currency"/></td>
                         <td class="text-center" width="15%"><a class="text-warning"
                                                                href="${ctx}/cart/remove/${product.id}"
                                                                onclick="return del()">删除</a></td>
                     </tr>
-                    <c:set var="totalPrice" value="${totalPrice + product.originalPrice * cartNumber}"/>
+                    <c:set var="totalPrice" value="${totalPrice + product.originalPrice * product.cart.number}"/>
                     <c:set var="totalDiscount"
-                           value="${totalDiscount + (product.originalPrice - product.price) * cartNumber}"/>
+                           value="${totalDiscount + (product.originalPrice - product.price) * product.cart.number}"/>
                 </c:forEach>
             </table>
             <table id="table-bottom" class="table table-striped">
@@ -267,7 +263,7 @@
         var add = $('.add');
         // var num = $('.num');
 
-        sub.addClass('cursor-disabled');
+        // sub.addClass('cursor-disabled');
         add.addClass('cursor-enabled');
 
         add.on('click', function () {
@@ -287,7 +283,7 @@
 
             var productId = $(this).parent().attr('data-product-id');
             $.ajax({
-                url: '${ctx}/cart/create',
+                url: '${ctx}/cart/modifyNumber',
                 type: 'post',
                 data: {'productId': productId, 'number': 1},
                 dataType: 'json',
@@ -297,15 +293,27 @@
             });
         });
 
-        /*sub.on('click', function () {
-            var number = num.val();
+        sub.on('click', function () {
+            var number = $(this).next().val();
             if (number > 1) {
-                num.val(--number);
+                $(this).next().val(--number);
             } else {
-                sub.removeClass('cursor-enabled').addClass('cursor-disabled')
+                $(this).removeClass('cursor-enabled').addClass('cursor-disabled');
             }
+
+            var productId = $(this).parent().attr('data-product-id');
+            $.ajax({
+                url: '${ctx}/cart/modifyNumber',
+                type: 'post',
+                data: {'productId': productId, 'number': -1},
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                }
+            });
         });
 
+        /*
         num.on('keyup', function () {
             var number = num.val();
             if (number <= 0) {

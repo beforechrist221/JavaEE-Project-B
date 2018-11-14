@@ -27,5 +27,5 @@ public class Product implements Serializable {
     private String updateTime;
     private Integer categoryId;
 
-    private List<Cart> carts;
+    private Cart cart;
 }
