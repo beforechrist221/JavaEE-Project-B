@@ -8,6 +8,7 @@ import project.demo.model.Cart;
 import project.demo.model.User;
 import project.demo.service.CartService;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,7 +36,20 @@ public class CartController extends BaseController {
 
     @RequestMapping("remove/{id}")
     private String remove(@PathVariable("id") Integer id) {
-        cartService.remove(id);
+        removeByProductId(id);
+        return "redirect:/cart/queryAll";
+    }
+
+    private void removeByProductId(int productId) {
+        cartService.remove(productId);
+    }
+
+    @RequestMapping("batchRemove")
+    private String batchRemove(@RequestParam int[] productIds) {
+        System.out.println(Arrays.toString(productIds));
+        for (int productId : productIds) {
+            removeByProductId(productId);
+        }
         return "redirect:/cart/queryAll";
     }
 

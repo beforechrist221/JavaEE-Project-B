@@ -112,6 +112,11 @@
             cursor: pointer;
             color: #333;
         }
+
+        #submit {
+            background: none;
+            border: none;
+        }
     </style>
     <script>
         function del() {
@@ -125,68 +130,74 @@
 <main class="container">
     <h1>购物车</h1>
     <section class="col-md-12">
-
-        <table class="table table-striped">
-            <tr>
-                <td width="10%"><input type="checkbox" class="all" checked="checked"> 全选</td>
-                <th class="text-center" width="35%" colspan="2">商品信息</th>
-                <th class="text-center" width="15%">单价</th>
-                <th class="text-center" width="10%">数量</th>
-                <th class="text-center" width="10%">小计</th>
-                <th class="text-center" width="15%">操作</th>
-            </tr>
-        </table>
-        <table id="table-data" class="table">
-            <c:set var="totalPrice" value="0"/>
-            <c:set var="totalDiscount" value="0"/>
-            <c:forEach var="product" items="${sessionScope.list}">
-                <tr class="bg-warning tr-data">
-                    <c:set var="cartNumber" value="0"/>
-                    <c:forEach var="cart" items="${product.carts}">
-                        <c:set var="cartNumber" value="${cartNumber + cart.number}"/>
-                    </c:forEach>
-                    <td width="10%">
-                        <input type="checkbox" name="product" checked="checked"
-                               data-number="${cartNumber}"
-                               data-price="${product.price}"
-                               data-originalPrice="${product.originalPrice}">
-                    </td>
-                    <td width="15%" class="picture" title='${product.coverPicture}'></td>
-                    <td class="text-center" width="20%">${product.title}</td>
-                    <td class="text-center" width="15%">
-                        <span><fmt:formatNumber value="${product.price}" type="currency"/></span>
-                        <span><fmt:formatNumber value="${product.originalPrice}" type="currency"/></span>
-                    </td>
-                    <td class="text-center number" width="10%" data-price="${product.price}"
-                        data-product-id="${product.id}">
-                        <span class="sub">-</span><input class="num" name="number" value="${cartNumber}"><span
-                            class="add">+</span>
-                    </td>
-                    <td class="product-total-price" class="text-center" width="10%"><fmt:formatNumber
-                            value="${product.price * cartNumber}"
-                            type="currency"/></td>
-                    <td class="text-center" width="15%"><a class="text-warning" href="${ctx}/cart/remove/${product.id}" onclick="return del()">删除</a></td>
+        <form action="${ctx}/cart/batchRemove">
+            <table class="table table-striped">
+                <tr>
+                    <td width="10%"><input type="checkbox" class="all" checked="checked"> 全选</td>
+                    <th class="text-center" width="35%" colspan="2">商品信息</th>
+                    <th class="text-center" width="15%">单价</th>
+                    <th class="text-center" width="10%">数量</th>
+                    <th class="text-center" width="10%">小计</th>
+                    <th class="text-center" width="15%">操作</th>
                 </tr>
-                <c:set var="totalPrice" value="${totalPrice + product.originalPrice * cartNumber}"/>
-                <c:set var="totalDiscount"
-                       value="${totalDiscount + (product.originalPrice - product.price) * cartNumber}"/>
-            </c:forEach>
-        </table>
-        <table id="table-bottom" class="table table-striped">
-            <tr>
-                <th width="10%"><input type="checkbox" class="all" style="text-align: left;" checked="checked"> 已选<span
-                        id="selected-number"></span></th>
-                <th width="15%"><a class="text-warning" href="">批量删除</a></th>
-                <th width="35%" style="line-height: 30px;">
-                    <p>商品合计：<span id="total-price"><fmt:formatNumber value="${totalPrice}" type="currency"/></span></p>
-                    <p>活动优惠：<span id="total-discount">-<fmt:formatNumber value="${totalDiscount}"
-                                                                         type="currency"/></span></p>
-                </th>
-                <th width="20%" colspan="2">应付总额：<span id="pay"><fmt:formatNumber value="${totalPrice - totalDiscount}"
-                                                                                  type="currency"/></span></th>
-                <th id="order" width="15%">下单</th>
-            </tr>
-        </table>
+            </table>
+            <table id="table-data" class="table">
+                <c:set var="totalPrice" value="0"/>
+                <c:set var="totalDiscount" value="0"/>
+                <c:forEach var="product" items="${sessionScope.list}">
+                    <tr class="bg-warning tr-data">
+                        <c:set var="cartNumber" value="0"/>
+                        <c:forEach var="cart" items="${product.carts}">
+                            <c:set var="cartNumber" value="${cartNumber + cart.number}"/>
+                        </c:forEach>
+                        <td width="10%">
+                            <input type="checkbox" name="productIds" value="${product.id}" checked="checked"
+                                   data-number="${cartNumber}"
+                                   data-price="${product.price}"
+                                   data-originalPrice="${product.originalPrice}">
+                        </td>
+                        <td width="15%" class="picture" title='${product.coverPicture}'></td>
+                        <td class="text-center" width="20%">${product.title}</td>
+                        <td class="text-center" width="15%">
+                            <span><fmt:formatNumber value="${product.price}" type="currency"/></span>
+                            <span><fmt:formatNumber value="${product.originalPrice}" type="currency"/></span>
+                        </td>
+                        <td class="text-center number" width="10%" data-price="${product.price}"
+                            data-product-id="${product.id}">
+                            <span class="sub">-</span><input class="num" name="number" value="${cartNumber}"><span
+                                class="add">+</span>
+                        </td>
+                        <td class="product-total-price" class="text-center" width="10%"><fmt:formatNumber
+                                value="${product.price * cartNumber}"
+                                type="currency"/></td>
+                        <td class="text-center" width="15%"><a class="text-warning"
+                                                               href="${ctx}/cart/remove/${product.id}"
+                                                               onclick="return del()">删除</a></td>
+                    </tr>
+                    <c:set var="totalPrice" value="${totalPrice + product.originalPrice * cartNumber}"/>
+                    <c:set var="totalDiscount"
+                           value="${totalDiscount + (product.originalPrice - product.price) * cartNumber}"/>
+                </c:forEach>
+            </table>
+            <table id="table-bottom" class="table table-striped">
+                <tr>
+                    <th width="10%"><input type="checkbox" class="all" style="text-align: left;" checked="checked">
+                        已选<span
+                                id="selected-number"></span></th>
+                    <th width="15%"><input id="submit" type="submit" class="text-warning" value="批量删除"></th>
+                    <th width="35%" style="line-height: 30px;">
+                        <p>商品合计：<span id="total-price"><fmt:formatNumber value="${totalPrice}" type="currency"/></span>
+                        </p>
+                        <p>活动优惠：<span id="total-discount">-<fmt:formatNumber value="${totalDiscount}"
+                                                                             type="currency"/></span></p>
+                    </th>
+                    <th width="20%" colspan="2">应付总额：<span id="pay"><fmt:formatNumber
+                            value="${totalPrice - totalDiscount}"
+                            type="currency"/></span></th>
+                    <th id="order" width="15%">下单</th>
+                </tr>
+            </table>
+        </form>
     </section>
 </main>
 <footer class="jumbotron"></footer>
