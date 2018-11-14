@@ -208,7 +208,8 @@ truncate table db_b.user;
 truncate table db_b.user_info;
 
 select *
-from db_b.cart;
+from db_b.cart
+where productId = 1;
 
 select sum(number)
 from db_b.cart

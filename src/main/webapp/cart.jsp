@@ -69,7 +69,55 @@
         #table-data tr.tr-data td:last-of-type {
             border-right: 1px solid #ddd;
         }
+
+        .number input {
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .number span,
+        .number input {
+            vertical-align: middle;
+            display: inline-block;
+            width: 25px;
+            text-align: center;
+            border: 1px solid #ddd;
+            height: 25px;
+        }
+
+        .number input {
+            border-left: none;
+            border-right: none;
+            width: 40px;
+        }
+
+        .number input:focus {
+            outline-width: 0;
+        }
+
+        .number span {
+            background: #fff;
+            font-size: 18px;
+            line-height: 25px;
+            user-select: none;
+        }
+
+        .cursor-disabled {
+            cursor: not-allowed;
+            color: #ddd;
+        }
+
+        .cursor-enabled {
+            cursor: pointer;
+            color: #333;
+        }
     </style>
+    <script>
+        function del() {
+            return confirm('确认删除？');
+        }
+    </script>
 </head>
 <body>
 <nav id="nav" class="navbar navbar-inverse"></nav>
@@ -109,10 +157,15 @@
                         <span><fmt:formatNumber value="${product.price}" type="currency"/></span>
                         <span><fmt:formatNumber value="${product.originalPrice}" type="currency"/></span>
                     </td>
-                    <td class="text-center" width="10%">${cartNumber}</td>
-                    <td class="text-center" width="10%"><fmt:formatNumber value="${product.price * cartNumber}"
-                                                                          type="currency"/></td>
-                    <td class="text-center" width="15%"><a class="text-warning" href="">删除</a></td>
+                    <td class="text-center number" width="10%" data-price="${product.price}"
+                        data-product-id="${product.id}">
+                        <span class="sub">-</span><input class="num" name="number" value="${cartNumber}"><span
+                            class="add">+</span>
+                    </td>
+                    <td class="product-total-price" class="text-center" width="10%"><fmt:formatNumber
+                            value="${product.price * cartNumber}"
+                            type="currency"/></td>
+                    <td class="text-center" width="15%"><a class="text-warning" href="${ctx}/cart/remove/${product.id}" onclick="return del()">删除</a></td>
                 </tr>
                 <c:set var="totalPrice" value="${totalPrice + product.originalPrice * cartNumber}"/>
                 <c:set var="totalDiscount"
@@ -161,11 +214,6 @@
         });
 
         $('input:checkbox[name=product]').on('click', function () {
-            if ($(this).prop('checked')) {
-                $(this).prop('checked', true);
-            } else {
-                $(this).prop('checked', false);
-            }
             $('#selected-number').text('（' + getNumber() + '）');
             $('#total-price').text(getTotalPrice());
             $('#total-discount').text(getTotalDiscount());
@@ -202,6 +250,63 @@
             });
             return totalDiscount;
         }
+
+        /* number begin */
+        var sub = $('.sub');
+        var add = $('.add');
+        // var num = $('.num');
+
+        sub.addClass('cursor-disabled');
+        add.addClass('cursor-enabled');
+
+        add.on('click', function () {
+            var num = $(this).prev();
+            var number = num.val();
+            if (num.val() < 99) {
+                num.val(++number);
+            } else {
+                $(this).removeClass('cursor-enabled').addClass('cursor-disabled')
+            }
+            var price = $(this).parent().attr('data-price');
+            $(this).parent().next().text(price * number);
+
+            // $('#total-price').text(getTotalPrice());
+            // $('#total-discount').text(getTotalDiscount());
+            // $('#pay').text(getTotalPrice() - getTotalDiscount());
+
+            var productId = $(this).parent().attr('data-product-id');
+            $.ajax({
+                url: '${ctx}/cart/create',
+                type: 'post',
+                data: {'productId': productId, 'number': 1},
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+        });
+
+        /*sub.on('click', function () {
+            var number = num.val();
+            if (number > 1) {
+                num.val(--number);
+            } else {
+                sub.removeClass('cursor-enabled').addClass('cursor-disabled')
+            }
+        });
+
+        num.on('keyup', function () {
+            var number = num.val();
+            if (number <= 0) {
+                sub.removeClass('cursor-enabled').addClass('cursor-disabled');
+            } else if (number < 99) {
+                sub.removeClass('cursor-disabled').addClass('cursor-enabled');
+                add.removeClass('cursor-disabled').addClass('cursor-enabled');
+            } else {
+                add.removeClass('cursor-enabled').addClass('cursor-disabled');
+            }
+        });*/
+        /* number end */
     });
 </script>
 </body>

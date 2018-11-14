@@ -11,7 +11,7 @@
     <delete id="remove">
         DELETE
         FROM db_b.cart
-        WHERE cart.id = #{id}
+        WHERE cart.productId = #{id}
     </delete>
     <update id="modify">
         UPDATE db_b.cart
