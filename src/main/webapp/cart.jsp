@@ -146,8 +146,9 @@
                 <c:set var="totalDiscount" value="0"/>
                 <c:forEach var="product" items="${sessionScope.list}">
                     <tr class="bg-warning tr-data">
-                        <td width="10%">
-                            <input type="checkbox" name="productIds" value="${product.id}" checked="checked"
+                        <td class="td-checkbox" width="10%">
+                            <input class="data-checkbox" type="checkbox" name="productIds" value="${product.id}"
+                                   checked="checked"
                                    data-number="${product.cart.number}"
                                    data-price="${product.price}"
                                    data-originalPrice="${product.originalPrice}">
@@ -158,9 +159,11 @@
                             <span><fmt:formatNumber value="${product.price}" type="currency"/></span>
                             <span><fmt:formatNumber value="${product.originalPrice}" type="currency"/></span>
                         </td>
-                        <td class="text-center number" width="10%" data-price="${product.price}"
+                        <td class="text-center number" width="10%"
+                            data-price="${product.price}"
                             data-product-id="${product.id}">
-                            <span class="sub">-</span><input class="num" name="number" value="${product.cart.number}"><span
+                            <span class="sub">-</span><input class="num" name="number"
+                                                             value="${product.cart.number}"><span
                                 class="add">+</span>
                         </td>
                         <td class="product-total-price" class="text-center" width="10%"><fmt:formatNumber
@@ -230,7 +233,7 @@
 
         function getNumber() {
             var number = 0;
-            $.each($('input:checkbox[name=product]'), function (index, item) {
+            $.each($('.data-checkbox'), function (index, item) {
                 if ($(this).prop('checked')) {
                     number += parseInt($(this).attr('data-number'));
                 }
@@ -240,7 +243,7 @@
 
         function getTotalPrice() {
             var totalPrice = 0;
-            $.each($('input:checkbox[name=product]'), function (index, item) {
+            $.each($('.data-checkbox'), function (index, item) {
                 if ($(this).prop('checked')) {
                     totalPrice += parseInt($(this).attr('data-originalPrice')) * parseInt($(this).attr('data-number'));
                 }
@@ -250,7 +253,7 @@
 
         function getTotalDiscount() {
             var totalDiscount = 0;
-            $.each($('input:checkbox[name=product]'), function (index, item) {
+            $.each($('.data-checkbox'), function (index, item) {
                 if ($(this).prop('checked')) {
                     totalDiscount += (parseInt($(this).attr('data-originalPrice')) - parseInt($(this).attr('data-price'))) * parseInt($(this).attr('data-number'));
                 }
@@ -277,10 +280,7 @@
             var price = $(this).parent().attr('data-price');
             $(this).parent().next().text(price * number);
 
-            // $('#total-price').text(getTotalPrice());
-            // $('#total-discount').text(getTotalDiscount());
-            // $('#pay').text(getTotalPrice() - getTotalDiscount());
-
+            var addObject = $(this);
             var productId = $(this).parent().attr('data-product-id');
             $.ajax({
                 url: '${ctx}/cart/modifyNumber',
@@ -288,19 +288,27 @@
                 data: {'productId': productId, 'number': 1},
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data);
+                    if (data.result) {
+                        var checkbox = addObject.parent().siblings('.td-checkbox').find('.data-checkbox');
+                        checkbox.attr('data-number', parseInt(checkbox.attr('data-number')) + 1);
+                        $('#total-price').text(getTotalPrice());
+                        $('#total-discount').text(getTotalDiscount());
+                        $('#pay').text(getTotalPrice() - getTotalDiscount());
+                    }
                 }
             });
         });
 
         sub.on('click', function () {
-            var number = $(this).next().val();
+            var number = parseInt($(this).next().val());
             if (number > 1) {
                 $(this).next().val(--number);
             } else {
                 $(this).removeClass('cursor-enabled').addClass('cursor-disabled');
+                $(this).prop('disabled', true);
             }
 
+            var subObject = $(this);
             var productId = $(this).parent().attr('data-product-id');
             $.ajax({
                 url: '${ctx}/cart/modifyNumber',
@@ -308,7 +316,13 @@
                 data: {'productId': productId, 'number': -1},
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data);
+                    if (data.result) {
+                        var checkbox = subObject.parent().siblings('.td-checkbox').find('.data-checkbox');
+                        checkbox.attr('data-number', parseInt(checkbox.attr('data-number')) - 1);
+                        $('#total-price').text(getTotalPrice());
+                        $('#total-discount').text(getTotalDiscount());
+                        $('#pay').text(getTotalPrice() - getTotalDiscount());
+                    }
                 }
             });
         });
