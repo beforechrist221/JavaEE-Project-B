@@ -149,6 +149,7 @@
                         <td class="td-checkbox" width="10%">
                             <input class="data-checkbox" type="checkbox" name="productIds" value="${product.id}"
                                    checked="checked"
+                                   data-cart-id="${product.cart.id}"
                                    data-number="${product.cart.number}"
                                    data-price="${product.price}"
                                    data-originalPrice="${product.originalPrice}">
@@ -205,6 +206,25 @@
 <script src="${ctx}/assets/scripts/global.js"></script>
 <script>
     $(function () {
+        $('#order').on('click', function () {
+            var ids = [];
+            $.each($('.data-checkbox'), function (index, item) {
+                if ($(this).prop('checked')) {
+                    ids.push(parseInt($(this).attr('data-cart-id')));
+                }
+            });
+            $.ajax({
+                url: '${ctx}/cart/confirmOrder',
+                type: 'post',
+                data: {'ids':ids}, // select ... from ... where cart.id in (1, 2)
+                dataType: 'json',
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+        });
+
+
         $.each($('.picture'), function (index, item) {
             var picture = $.parseJSON($(this).attr('title'))[0];
             $(this).append('<img src="${ctx}/pictures/cover/' + picture + '"/>')
