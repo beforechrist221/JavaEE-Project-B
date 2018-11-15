@@ -216,3 +216,7 @@ select sum(number)
 from db_b.cart
 where userId = 1
 group by userId;
+
+select *
+from db_b.cart
+where id in (3, 4);

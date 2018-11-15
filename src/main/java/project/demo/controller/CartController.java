@@ -10,6 +10,7 @@ import project.demo.service.CartService;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -107,6 +108,17 @@ public class CartController extends BaseController {
         cart.setProductId(productId);
         cart.setNumber(number);
         cartService.modify("modifyNumber", cart);
+        Map<String, Boolean> map = new HashMap<>();
+        map.put("result", true);
+        return map;
+    }
+
+    @RequestMapping("confirmOrder")
+    @ResponseBody
+    private Map<String, Boolean> confirmOrder(@RequestParam("ids[]") List<Integer> ids) {
+
+        session.setAttribute("list", cartService.queryList("confirmOrder", ids));
+
         Map<String, Boolean> map = new HashMap<>();
         map.put("result", true);
         return map;

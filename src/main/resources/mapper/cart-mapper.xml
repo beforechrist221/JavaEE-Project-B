@@ -63,4 +63,13 @@
         where productId = #{productId}
           and userId = #{userId}
     </update>
+    <select id="confirmOrder" parameterType="list" resultType="cart">
+        select *
+        from db_b.cart
+        where id in
+#         MyBatis 动态 SQL
+        <foreach collection="list" item="id" open="(" separator="," close=")" index="i">
+            #{id}
+        </foreach>
+    </select>
 </mapper>

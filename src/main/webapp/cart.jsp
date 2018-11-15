@@ -219,7 +219,7 @@
                 data: {'ids':ids}, // select ... from ... where cart.id in (1, 2)
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data);
+                    console.log(data.result);
                 }
             });
         });
