@@ -47,4 +47,11 @@
         set status = 1
         where id = #{id}
     </update>
+    <select id="queryDefaultAddress" parameterType="int" resultType="address">
+        select *
+        from db_b.address
+        where userId = #{userId}
+          and status = 1;
+        /* 如果没有默认地址？ */
+    </select>
 </mapper>

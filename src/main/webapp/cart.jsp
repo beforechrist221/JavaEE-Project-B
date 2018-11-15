@@ -216,10 +216,12 @@
             $.ajax({
                 url: '${ctx}/cart/confirmOrder',
                 type: 'post',
-                data: {'ids':ids}, // select ... from ... where cart.id in (1, 2)
+                data: {'ids': ids}, // select ... from ... where cart.id in (1, 2)
                 dataType: 'json',
                 success: function (data) {
-                    console.log(data.result);
+                    if (data.result) {
+                        window.location.href = '${ctx}/confirm-order.jsp';
+                    }
                 }
             });
         });

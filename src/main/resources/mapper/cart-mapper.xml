@@ -63,13 +63,20 @@
         where productId = #{productId}
           and userId = #{userId}
     </update>
-    <select id="confirmOrder" parameterType="list" resultType="cart">
-        select *
-        from db_b.cart
-        where id in
+    <select id="confirmOrder" parameterType="map" resultMap="queryAll_map">
+        SELECT p.id, p.coverPicture, p.title, p.price, p.originalPrice, c.id as cartId, c.number
+        FROM db_b.cart c
+        inner join db_b.product p on c.productId = p.id
+        inner join db_b.user u on c.userId = u.id
+        where u.id = #{id} and  c.id in
 #         MyBatis 动态 SQL
         <foreach collection="list" item="id" open="(" separator="," close=")" index="i">
             #{id}
         </foreach>
     </select>
+
+    <!--
+        user id: 1
+        cart ids: [3, 4]
+    -->
 </mapper>

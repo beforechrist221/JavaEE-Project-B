@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import project.demo.model.Cart;
 import project.demo.model.User;
+import project.demo.service.AddressService;
 import project.demo.service.CartService;
 
 import java.util.Arrays;
@@ -18,10 +19,16 @@ import java.util.Map;
 public class CartController extends BaseController {
 
     private final CartService cartService;
+    private AddressService addressService;
 
     @Autowired
     public CartController(CartService cartService) {
         this.cartService = cartService;
+    }
+
+    @Autowired
+    public void setAddressService(AddressService addressService) {
+        this.addressService = addressService;
     }
 
     /**
@@ -116,8 +123,15 @@ public class CartController extends BaseController {
     @RequestMapping("confirmOrder")
     @ResponseBody
     private Map<String, Boolean> confirmOrder(@RequestParam("ids[]") List<Integer> ids) {
+        User user = (User) session.getAttribute("user");
+        int userId = user.getId();
 
-        session.setAttribute("list", cartService.queryList("confirmOrder", ids));
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("id", userId);
+        paramMap.put("list", ids);
+        session.setAttribute("list", cartService.queryList("confirmOrder", paramMap));
+
+        session.setAttribute("address", addressService.queryOne("queryDefaultAddress", userId));
 
         Map<String, Boolean> map = new HashMap<>();
         map.put("result", true);
