@@ -5,8 +5,8 @@
 
 <mapper namespace="category">
     <insert id="create" parameterType="category" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO db_b.category (title, `desc`, parentId, status, createTime)
-        VALUES (#{title}, #{desc}, #{parentId}, #{status}, now())
+        INSERT INTO db_b.category (title, `desc`, categoryId, status, createTime)
+        VALUES (#{title}, #{desc}, #{categoryId}, #{status}, now())
     </insert>
     <delete id="remove">
         DELETE
@@ -17,7 +17,7 @@
         UPDATE db_b.category
         SET title      = #{title},
             `desc`     = #{desc},
-            parentId   = #{parentId},
+            categoryId   = #{categoryId},
             status     = #{status},
             updateTime = now()
         WHERE category.id = #{id}
@@ -36,7 +36,7 @@
     <select id="queryFistLevelCategory" resultType="category">
         select *
         from db_b.category
-        where parentId is null
+        where categoryId = 0
     </select>
 
     <resultMap id="queryCategoryTree_map" type="category">
@@ -49,7 +49,7 @@
     <select id="queryCategoryTree" resultMap="queryCategoryTree_map">
         select c1.title as firstLevelTitle, c2.id, c2.title
         from db_b.category c1
-                 left outer join db_b.category c2 on c1.id = c2.parentId
-        where c1.parentId is null /*c1 是一级类别*/
+                 left outer join db_b.category c2 on c1.id = c2.categoryId
+        where c1.categoryId = 0 /*c1 是一级类别*/
     </select>
 </mapper>

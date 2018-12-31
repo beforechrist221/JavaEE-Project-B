@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Product implements Serializable {
     private Integer id;
+    private int productId;
     private String title;
     private String desc;
     private double price;
@@ -20,7 +21,8 @@ public class Product implements Serializable {
     private String coverPicture;
     private String slidePictures;
     private String detailPictures;
-    private String spec;
+    private String mp4;
+    private String webm;
     private int stock;
     private int status;
     private String createTime;

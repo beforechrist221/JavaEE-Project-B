@@ -26,6 +26,10 @@
         p.t {
             margin-top: 5px;
             font-weight: bolder;
+            white-space: nowrap;
+            width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         p.t:hover {
@@ -75,13 +79,12 @@
             dataType: 'json',
             success: function (data) {
                 $.each(data, function (index, item) {
-                    $('main').append('<section id="' + item.id + '" class="col-md-3"><article></article><p class="t"></p><p class="p"><b></b><s></s></p><p class="d"></p></section>');
+                    $('main').append('<section id="' + item.id + '" class="col-md-3"><article></article><p class="t"></p><p class="p"><b></b><s></s></p></section>');
                     var section = $('#' + item.id);
-                    section.find('article').css('background-image', 'url(pictures/cover/' + $.parseJSON(item.coverPicture)[0] + ')');
+                    section.find('article').css('background-image', 'url(${img}/slide_pictures/' + item.supId + '/' + item.categoryId + '/' + item.productId + '/' + item.couverPicture + ')');
                     section.find('p.t').text(item.title);
                     section.find('p.p b').text(item.price);
                     section.find('p.p s').text(item.originalPrice);
-                    section.find('p.d').text(item.desc);
                 });
             }
         });

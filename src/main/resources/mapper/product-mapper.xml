@@ -12,7 +12,6 @@
                                   coverPicture,
                                   slidePictures,
                                   detailPictures,
-                                  spec,
                                   stock,
                                   status,
                                   createTime,
@@ -25,7 +24,6 @@
                 #{coverPicture},
                 #{slidePictures},
                 #{detailPictures},
-                #{spec},
                 #{stock},
                 #{status},
                 now(),
@@ -46,7 +44,6 @@
             coverPicture   = #{coverPicture},
             slidePictures  = #{slidePictures},
             detailPictures = #{detailPictures},
-            spec           = #{spec},
             stock          = #{stock},
             status         = #{status},
             updateTime     = now(),
@@ -65,6 +62,7 @@
     </select>
 
     <select id="queryIndexProducts" resultType="product">
+#         todo
         select id, title, coverPicture, price, originalPrice, `desc`
         from db_b.product
         where status = 0

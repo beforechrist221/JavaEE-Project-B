@@ -100,7 +100,10 @@ public class CartController extends BaseController {
     @ResponseBody
     private Map<String, Integer> queryCartNumber() {
         User user = (User) session.getAttribute("user");
-        int cartNumber = (int) cartService.query("queryCartNumber", user.getId());
+        int cartNumber = 0;
+        if (user != null) {
+            cartNumber = (int) cartService.query("queryCartNumber", user.getId());
+        }
         Map<String, Integer> map = new HashMap<>();
         map.put("cartNumber", cartNumber);
         return map;

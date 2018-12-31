@@ -15,7 +15,9 @@ public class Category implements Serializable {
     private Integer id;
     private String title;
     private String desc;
-    private Integer parentId;
+    private String group;
+    private String icon;
+    private Integer categoryId;
     private int status;
     private String createTime;
     private String updateTime;
