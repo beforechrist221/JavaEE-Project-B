@@ -17,7 +17,7 @@
         UPDATE db_b.category
         SET title      = #{title},
             `desc`     = #{desc},
-            categoryId   = #{categoryId},
+            categoryId = #{categoryId},
             status     = #{status},
             updateTime = now()
         WHERE category.id = #{id}
@@ -40,16 +40,17 @@
     </select>
 
     <resultMap id="queryCategoryTree_map" type="category">
-        <result property="title" column="firstLevelTitle"/>
+        <id property="id" column="supId"/>
+        <result property="title" column="supTitle"/>
         <collection property="categories" ofType="category">
             <id property="id" column="id"/>
             <result property="title" column="title"/>
         </collection>
     </resultMap>
     <select id="queryCategoryTree" resultMap="queryCategoryTree_map">
-        select c1.title as firstLevelTitle, c2.id, c2.title
-        from db_b.category c1
-                 left outer join db_b.category c2 on c1.id = c2.categoryId
-        where c1.categoryId = 0 /*c1 是一级类别*/
+        select sup.id as supId, sup.title as supTitle, sub.id, sub.title
+        from db_b.category sup
+                 left outer join db_b.category sub on sup.id = sub.categoryId
+        where sup.categoryId = 0 /*sup 是一级类别*/
     </select>
 </mapper>

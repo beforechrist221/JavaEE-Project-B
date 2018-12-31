@@ -75,7 +75,7 @@
 <script>
     $(function () {
         $.ajax({
-            url: '${ctx}/product/index',
+            url: '${ctx}/category/index',
             type: 'post',
             dataType: 'json',
             success: function (data) {

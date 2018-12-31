@@ -22,4 +22,5 @@ public class Category implements Serializable {
     private String createTime;
     private String updateTime;
     private List<Category> categories;
+    private List<Product> products;
 }
