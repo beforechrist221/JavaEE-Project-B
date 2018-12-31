@@ -29,5 +29,8 @@ public class Product implements Serializable {
     private String updateTime;
     private Integer categoryId;
 
+    private String coverPath; // 指代封面图片的目录结构
+
     private Cart cart;
+    private Category category;
 }

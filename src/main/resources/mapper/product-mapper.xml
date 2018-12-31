@@ -61,10 +61,30 @@
         WHERE product.id = #{id}
     </select>
 
-    <select id="queryIndexProducts" resultType="product">
-#         todo
-        select id, title, coverPicture, price, originalPrice, `desc`
-        from db_b.product
-        where status = 0
+    <resultMap id="map_queryIndexProducts" type="product">
+        <id property="id" column="id"/>
+        <result property="productId" column="productId"/>
+        <result property="title" column="title"/>
+        <result property="coverPicture" column="coverPicture"/>
+        <result property="price" column="price"/>
+        <result property="originalPrice" column="originalPrice"/>
+        <result property="categoryId" column="categoryId"/>
+        <association property="category" javaType="category">
+            <result property="categoryId" column="supId"/>
+        </association>
+    </resultMap>
+    <select id="queryIndexProducts" resultMap="map_queryIndexProducts">
+        select c.categoryId as supId,
+               p.id,
+               p.productId,
+               p.title,
+               p.coverPicture,
+               p.price,
+               p.originalPrice,
+               p.categoryId
+        from db_b.product p
+                 inner join db_b.category c on p.categoryId = c.id
+        where p.status = 0
+        limit 100 offset 0
     </select>
 </mapper>

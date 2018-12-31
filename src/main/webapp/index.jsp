@@ -13,6 +13,7 @@
         article {
             background: #f4f4f4 no-repeat center center;
             height: 245px;
+            background-size: cover;
         }
 
         article:hover {
@@ -81,7 +82,7 @@
                 $.each(data, function (index, item) {
                     $('main').append('<section id="' + item.id + '" class="col-md-3"><article></article><p class="t"></p><p class="p"><b></b><s></s></p></section>');
                     var section = $('#' + item.id);
-                    section.find('article').css('background-image', 'url(${img}/slide_pictures/' + item.supId + '/' + item.categoryId + '/' + item.productId + '/' + item.couverPicture + ')');
+                    section.find('article').css('background-image', 'url(${img}' + item.coverPath + item.coverPicture + ')');
                     section.find('p.t').text(item.title);
                     section.find('p.p b').text(item.price);
                     section.find('p.p s').text(item.originalPrice);

@@ -88,7 +88,12 @@ public class ProductController extends BaseController {
     @RequestMapping("index")
     @ResponseBody
     private List<Product> index() {
-        return productService.queryList("queryIndexProducts", null);
+        List<Product> products = productService.queryList("queryIndexProducts", null);
+        for (Product product : products) {
+            String coverPath = "slide_pictures" + "/" + product.getCategory().getCategoryId() + "/" + product.getCategoryId() + "/" + product.getProductId() + "/";
+            product.setCoverPath(coverPath);
+        }
+        return products;
     }
 
     @RequestMapping("detail/{id}")
