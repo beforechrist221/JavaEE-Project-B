@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import project.demo.model.Product;
 import project.demo.service.CategoryService;
 import project.demo.service.ProductService;
+import project.demo.util.Constants;
 
 import java.io.File;
 import java.io.IOException;
@@ -90,8 +91,14 @@ public class ProductController extends BaseController {
     private List<Product> index() {
         List<Product> products = productService.queryList("queryIndexProducts", null);
         for (Product product : products) {
-            String coverPath = "slide_pictures" + "/" + product.getCategory().getCategoryId() + "/" + product.getCategoryId() + "/" + product.getProductId() + "/";
-            product.setCoverPath(coverPath);
+            String coverPath =
+                    Constants.NGINX
+                            + "slide_pictures"
+                            + "/" + product.getCategory().getCategoryId()
+                            + "/" + product.getCategoryId()
+                            + "/" + product.getProductId()
+                            + "/" + product.getCoverPicture();
+            product.setCoverPictureUrl(coverPath);
         }
         return products;
     }

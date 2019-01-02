@@ -69,7 +69,7 @@
 <header class="index jumbotron"></header>
 <main class="container">
     <section id="3857" class="col-md-3">
-        <article style="background-image: url(${img}{{product.coverPath}}{{product.coverPicture}});"></article>
+        <article v-bind:style="{backgroundImage:'url(' + product.coverPictureUrl + ')'}"></article>
         <p class="t">{{product.title}}</p>
         <p class="p"><b>{{product.price}}</b><s>{{product.originalPrice}}</s></p>
     </section>

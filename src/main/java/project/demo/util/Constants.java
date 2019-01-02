@@ -6,4 +6,6 @@ public interface Constants {
     String DETAIL_PICTURE_DIR = "pictures/detail";
 
     int PAGE_SIZE = 2;
+
+    String NGINX = "http://localhost:81/static/";
 }
