@@ -69,16 +69,16 @@
 <header class="index jumbotron"></header>
 <main class="container">
     <section id="3857" class="col-md-3">
-        <article
-                style="background-image: url(http://localhost:81/static/slide_pictures/1019000/1069001/3411066/4b5c48cad5ea021a9ad40eeba2e87e2c.png);"></article>
-        <p class="t"> EVA Q版抱枕 新世纪福音战士</p>
-        <p class="p"><b>85</b><s>85</s></p>
+        <article style="background-image: url(${img}{{product.coverPath}}{{product.coverPicture}});"></article>
+        <p class="t">{{product.title}}</p>
+        <p class="p"><b>{{product.price}}</b><s>{{product.originalPrice}}</s></p>
     </section>
 </main>
 <footer class="index jumbotron"></footer>
 <script src="assets/scripts/jquery.min.js"></script>
 <script src="assets/bootstrap/js/bootstrap.js"></script>
 <script src="assets/scripts/global.js"></script>
+<script src="assets/scripts/vue.min.js"></script>
 <script>
     $(function () {
         $.ajax({
@@ -86,14 +86,14 @@
             type: 'post',
             dataType: 'json',
             success: function (data) {
-                <%--$.each(data, function (index, item) {--%>
-                    <%--$('main').append('<section id="' + item.id + '" class="col-md-3"><article></article><p class="t"></p><p class="p"><b></b><s></s></p></section>');--%>
-                    <%--var section = $('#' + item.id);--%>
-                    <%--section.find('article').css('background-image', 'url(${img}' + item.coverPath + item.coverPicture + ')');--%>
-                    <%--section.find('p.t').text(item.title);--%>
-                    <%--section.find('p.p b').text(item.price);--%>
-                    <%--section.find('p.p s').text(item.originalPrice);--%>
-                <%--});--%>
+                product = data[1];
+                console.log(product);
+                vm = new Vue({
+                    el: 'section',
+                    data: {
+                        product: product
+                    }
+                });
             }
         });
 
