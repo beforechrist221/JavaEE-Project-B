@@ -19,11 +19,12 @@ compile 'com.fasterxml.jackson.core:jackson-databind:2.9.7'
 
 2. controller
 ```java
-@RequestMapping("");
+@RequestMapping("")
 @ResponseBody
-public Map method(){
-    map.put(key, value);
-    return map; // {"key": value}
+public Map<String, Object> method(){
+    Map<String, Object> map = new HashMap<>();
+    map.put("key", "value");
+    return map; // {"key": "value"}
 }
 ```
 

@@ -73,7 +73,7 @@
             <result property="categoryId" column="supId"/>
         </association>
     </resultMap>
-    <select id="queryIndexProducts" parameterType="int" resultMap="map_queryIndexProducts">
+    <select id="queryIndexProducts"  resultMap="map_queryIndexProducts">
         select c.categoryId as supId,
                p.id,
                p.productId,
@@ -86,8 +86,8 @@
                  inner join db_b.category c on p.categoryId = c.id
         where p.status = 0
           and p.stock > 0
-          and c.categoryId = #{id}
+
         order by p.title
-        limit 8 offset 0
+        limit 100 offset 0
     </select>
 </mapper>
